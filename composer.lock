@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38693037b112b124dd053d2162716f55",
+    "content-hash": "c1f89638c15be050238e8202926f7d35",
     "packages": [
         {
             "name": "bosnadev/database",
@@ -558,6 +558,48 @@
             "time": "2018-12-04T22:38:24+00:00"
         },
         {
+            "name": "eklundkristoffer/seedster",
+            "version": "3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eklundkristoffer/seedster.git",
+                "reference": "f69023f35aafb6b745c6be78effefde1ed992b97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eklundkristoffer/seedster/zipball/f69023f35aafb6b745c6be78effefde1ed992b97",
+                "reference": "f69023f35aafb6b745c6be78effefde1ed992b97",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.5.* || 5.6.* || 5.7.* || 5.8.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Seedster\\SeedsterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Seedster\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kristoffer Eklund",
+                    "email": "kristoffereklund1@gmail.com"
+                }
+            ],
+            "time": "2019-03-01T05:00:16+00:00"
+        },
+        {
             "name": "erusev/parsedown",
             "version": "1.7.3",
             "source": {
@@ -837,6 +879,65 @@
             ],
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "jeremykenedy/laravel-roles",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeremykenedy/laravel-roles.git",
+                "reference": "70e545f13449832cde0ebc71d48162d9e158c3af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeremykenedy/laravel-roles/zipball/70e545f13449832cde0ebc71d48162d9e158c3af",
+                "reference": "70e545f13449832cde0ebc71d48162d9e158c3af",
+                "shasum": ""
+            },
+            "require": {
+                "eklundkristoffer/seedster": "^3.0",
+                "laravel/framework": "5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
+                "php": ">=5.6.4"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "jeremykenedy\\LaravelRoles\\RolesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "jeremykenedy\\LaravelRoles\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Bičan",
+                    "email": "romanbican@seznam.cz"
+                },
+                {
+                    "name": "Jeremy Kenedy",
+                    "email": "jeremykenedy@gmail.com"
+                },
+                {
+                    "name": "Ultraware"
+                }
+            ],
+            "description": "Powerful package for handling roles, permissions, and levels in Laravel. Supports Laravel 5.3 and higher",
+            "keywords": [
+                "acl",
+                "laravel",
+                "levels",
+                "permissions",
+                "roles"
+            ],
+            "time": "2019-03-23T09:27:42+00:00"
         },
         {
             "name": "jmikola/geojson",

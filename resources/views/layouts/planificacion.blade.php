@@ -63,7 +63,7 @@
 
             <div class="navbar-header" style="margin-top: 10px;">
                 <div id="direcciones" style="position: relative;">
-                    <input type="text" class="ubicaciones-input" id="txtDireccionesLugares" style="width: 100%;" placeholder="Direcciones o Lugares. Ej: Italia y Mendoza, Mitre 250" autocomplete="off" {{ (Auth::user()->roles[0]->name == 'administracion') ? 'disabled': '' }}>
+                    <!--<input type="text" class="ubicaciones-input" id="txtDireccionesLugares" style="width: 100%;" placeholder="Direcciones o Lugares. Ej: Italia y Mendoza, Mitre 250" autocomplete="off" {{ (Auth::user()->roles[0]->name == 'administracion') ? 'disabled': '' }}>-->
                 </div>
             </div>
 

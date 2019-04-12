@@ -1,0 +1,112 @@
+.ubicaciones-input {
+    display: inline-block;
+    width: 70%/*"350px*/;
+    height: 34px;
+    padding: 2px 12px;
+    font-family: Montserrat,Arial,"Times New Roman",Times,serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 0px solid #ccc;
+    /*border: 1px solid #ccc;
+    border-radius: 4px 0px 0px 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
+}
+
+.ubicaciones-input:focus {
+    border-color: #66afe9;
+    outline: 0;
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,0.6);*/
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,0,0,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,0,0,0.6);
+}
+
+span.ubicaciones-clearicon {
+    position: relative;
+    margin-top: 10px;
+}
+
+#txtDireccionesLugares {
+    padding-right: 26px !important;
+}
+
+#txtDireccionesLugares-divider {
+    display: inline-block !important;
+    width: 0;
+    height: 2em;
+    border-left: 1px solid #808185;
+    border-right: 1px solid #808185;
+    margin-top: -2px;
+    right: 30% !important;
+}
+
+span.ubicaciones-clearicon span {
+    position: absolute;
+    cursor: pointer;
+    width: 70%;
+    background: url(../img/clear.png) !important;
+    top: 12px !important;
+    margin-right: -3px !important;
+}
+
+.ubicaciones-boton-search {
+    display: inline-block;
+    padding-right: 6px;
+    box-sizing: content-box;
+    position: absolute;
+    border: 0 !important;
+    font-family: "Glyphicons" !important;
+    height: 34px !important;
+    width: 34px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 0px !important;
+    background-color: #FFFFFF !important;
+}
+
+.ubicaciones-loading {
+    display: none;
+    margin-left: 48px !important;
+    width: 19px;
+    height: 19px;
+    padding-top: 10px;
+    position: absolute !important;
+}
+
+.ubicaciones-ul {
+    border: 1px #DDDDDD solid;
+    list-style: none;
+    padding: 0;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    margin: 1px;
+    box-shadow: 0 0 2px #999999;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.ubicaciones-li {
+    margin: 4px;
+    padding: 4px;
+    color: #555555;
+    cursor: pointer;
+    border-bottom: 1px solid #DDDDDD;
+    float: none !important;
+    font-family: Montserrat,Arial,"Times New Roman",Times,serif !important;
+    font-size: 14px !important;
+}
+
+.ubicaciones-resaltado {
+    font-weight: bold;
+}

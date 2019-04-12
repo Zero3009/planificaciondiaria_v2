@@ -9,7 +9,7 @@
 <input type="hidden" value="" id="coordenadaY">
 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
-<input type="hidden" name="rol" id="rol" value="@if(Auth::check()) @if (Auth::user()->is('developer')) true @endif @endif">
+<input type="hidden" name="rol" id="rol" value="@if(Auth::check()) @if (Auth::user()->hasRole('developer')) true @endif @endif">
 
 
 

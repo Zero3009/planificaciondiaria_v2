@@ -34,8 +34,8 @@
                     <input type="hidden" value="" id="calle">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" id="id_usuario" name="id_usuario" value="{{Auth::user()->id}}">
-                    <input type="hidden" id="rol" name="rol" value="{{Auth::user()->roles[0]->name}}">
-                    <input type="hidden" id="area" name="area" value="{{$query->id_area}}">
+                    <!--<input type="hidden" id="rol" name="rol" value="{{Auth::user()->roles[0]->name}}">
+                    --><input type="hidden" id="area" name="area" value="{{$query->id_area}}">
 
                     <input type="hidden" value="false" id="copiar-atributos">
                     <input type="hidden" value="false" id="referencia">

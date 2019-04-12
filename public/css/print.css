@@ -1,0 +1,68 @@
+.print{
+  width: 768px;
+  padding-top: 0px;
+}
+
+.print .leaflet-left{
+  display: none;
+}
+
+.print .leaflet-routing-alt table{
+  width: 100%;
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.print .leaflet-routing-alt td{
+  padding-bottom: 10px;
+  padding: 0px;
+}
+
+.print .leaflet-routing-container{
+  display: none;
+}
+
+.print .pag-1 {
+	height: 780px !important;
+}
+
+.print .pag-2 {
+	height: 780px !important;
+	display: block !important;
+}
+.print .titulo {
+	display: block !important;
+    text-align: center;
+    border-style: double;
+    margin-top: 10px;
+    border-radius: 30px;
+}
+.print .titulo h2{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.print .ruta {
+	display: block !important;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+	html, body {
+	    width: 210mm;
+	    height: 297mm;
+  	}
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+    }
+    .page-break	{ display: block; page-break-before: always; }
+}

@@ -12,7 +12,7 @@
                         {{ csrf_field() }}        
         <div class="alert alert-warning" role="alert" id="ocultar">
             <!--MOSTRAR ERROR DE LOGIN -->
-                    @if($errors->has())
+                    @if(count($errors) > 0)
                     @foreach ($errors->all() as $error)
                         <div>{{ $error }}</div>
                     @endforeach

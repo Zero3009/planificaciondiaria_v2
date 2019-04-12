@@ -99,7 +99,6 @@
     </div>
 
 </div>
-
 <script type="text/javascript">
 $(document).ready( function () {
     $('#pagina-1').click(function() {

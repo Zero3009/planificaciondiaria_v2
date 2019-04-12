@@ -100,30 +100,30 @@ class DatatablesController extends Controller
         // additional search
         if ($min = $datatables->request->get('min')) {
             $max = $datatables->request->get('max');
-            $datatables->whereRaw("\"fecha_planificada\" BETWEEN '$min' AND '$max'");
+            $geometrias->whereRaw("\"fecha_planificada\" BETWEEN '$min' AND '$max'");
         }
 
         if ($area = $datatables->request->get('area')) {
-            $datatables->whereRaw("\"id_area\" = '$area'");
+            $geometrias->whereRaw("\"id_area\" = '$area'");
         }
 
         if ($idseleccionados = $datatables->request->get('idseleccionados')) {
-            $datatables->whereRaw("\"id_info\" IN '$idseleccionados'");
+            $geometrias->whereRaw("\"id_info\" IN '$idseleccionados'");
         }
 
         if ($tipo_trabajo = $datatables->request->get('tipo_trabajo')) {
-            $datatables->whereRaw("\"id_tipo_trabajo\" = '$tipo_trabajo'");
+            $geometrias->whereRaw("\"id_tipo_trabajo\" = '$tipo_trabajo'");
         }
 
         if ($corte_calzada = $datatables->request->get('corte_calzada')) {
-            $datatables->whereRaw("\"id_corte_calzada\" = '$corte_calzada'");
+            $geometrias->whereRaw("\"id_corte_calzada\" = '$corte_calzada'");
         }
         if ($descripcion = $datatables->request->get('descripcion')) {
-            $datatables->whereRaw("UPPER(\"descripcion\") LIKE UPPER('%$descripcion%')");
+            $geometrias->whereRaw("UPPER(\"descripcion\") LIKE UPPER('%$descripcion%')");
         }
 
         if ($calle_zona = $datatables->request->get('calle_zona')) {
-            $datatables->whereRaw("UPPER(\"callezona\") LIKE UPPER('%$calle_zona%')");
+            $geometrias->whereRaw("UPPER(\"callezona\") LIKE UPPER('%$calle_zona%')");
         } 
 
         if ($datos_complementarios = $datatables->request->get('datos_complementarios')) {
@@ -135,7 +135,7 @@ class DatatablesController extends Controller
             }
             foreach ($array_form as $key => $value) {
                 if($value != ""){
-                    $datatables->whereRaw("UPPER(datos_complementarios ->> '$key') LIKE UPPER('%$value%')") ;
+                    $geometrias->whereRaw("UPPER(datos_complementarios ->> '$key') LIKE UPPER('%$value%')") ;
                 }
             }  
         }
@@ -145,9 +145,9 @@ class DatatablesController extends Controller
         //$data = $response->getData(true);
         //$this->gg = 'asd';
         //$data['key'] = $datatables->getQueryBuilder();
-        return $datatables->with([
+        return $datatables->/*with([
             'key1' => $datatables->getQueryBuilder()->toSql()
-        ])->make(true);
+        ])->*/make(true);
 	}
     public function Usuarios()
     {

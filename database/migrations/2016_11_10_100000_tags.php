@@ -29,6 +29,6 @@ class Tags extends Migration
     {
         Schema::dropIfExists('users_info');
         Schema::dropIfExists('area_dato');
-        Schema::drop('tags');
+        Schema::dropIfExists('tags');
     }
 }

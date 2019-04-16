@@ -35,6 +35,6 @@ class CapasUtiles extends Migration
      */
     public function down()
     {
-        Schema::drop('capas_utiles');
+        Schema::dropIfExists('capas_utiles');
     }
 }

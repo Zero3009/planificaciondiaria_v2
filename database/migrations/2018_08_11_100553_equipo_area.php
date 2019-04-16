@@ -27,6 +27,6 @@ class EquipoArea extends Migration
      */
     public function down()
     {
-        Schema::drop('equipo_area');
+        Schema::dropIfExists('equipo_area');
     }
 }

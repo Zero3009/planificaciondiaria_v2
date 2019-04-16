@@ -68,7 +68,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($geometrias)
             ->setRowId('id_info')
-            ->editColumn('datos_complementarios', function($geometrias) {
+            /*->editColumn('datos_complementarios', function($geometrias) {
                 $json = json_decode($geometrias->datos_complementarios, true);
                 $formato = "";
                 if(!is_null($json)){
@@ -85,7 +85,7 @@ class DatatablesController extends Controller
                     return $formato;
                 }
                 return "";
-            })
+            })*/
             ->addColumn('action', function ($geometrias) {
                 return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a><a href="#" class="btn btn-xs btn-info dats" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-search"></i></a>';
             });

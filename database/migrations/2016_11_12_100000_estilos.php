@@ -34,6 +34,6 @@ class Estilos extends Migration
      */
     public function down()
     {
-        Schema::drop('estilos');
+        Schema::dropIfExists('estilos');
     }
 }

@@ -28,6 +28,6 @@ class Linestrings extends Migration
      */
     public function down()
     {
-        Schema::drop('linestrings');
+        Schema::dropIfExists('linestrings');
     }
 }

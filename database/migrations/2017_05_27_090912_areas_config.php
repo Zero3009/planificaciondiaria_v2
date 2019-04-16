@@ -36,6 +36,6 @@ class AreasConfig extends Migration
      */
     public function down()
     {
-        Schema::drop('areas_config');
+        Schema::dropIfExists('areas_config');
     }
 }

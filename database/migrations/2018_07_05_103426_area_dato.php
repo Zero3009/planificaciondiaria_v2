@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAreaDato extends Migration
+class AreaDato extends Migration
 {
     /**
      * Run the migrations.
@@ -28,6 +28,6 @@ class AddAreaDato extends Migration
      */
     public function down()
     {
-        Schema::drop('area_dato');
+        Schema::dropIfExists('area_dato');
     }
 }

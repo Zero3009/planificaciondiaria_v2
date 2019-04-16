@@ -30,6 +30,7 @@ class FormProblemasTable extends Migration
             $table->string('cinco_transito')->nullable();
             $table->string('seis_vectores')->nullable();
             $table->string('vect_otro_text')->nullable();
+            $table->string('siete_vecino_niega')->nullable();
             $table->string('observaciones')->nullable();
         });
     }
@@ -41,6 +42,6 @@ class FormProblemasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('problemas_form');
+        Schema::dropIfExists('problemas_form');
     }
 }

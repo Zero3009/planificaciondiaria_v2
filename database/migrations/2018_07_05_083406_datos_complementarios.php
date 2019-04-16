@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDatosComplementarios extends Migration
+class DatosComplementarios extends Migration
 {
     /**
      * Run the migrations.
@@ -27,6 +27,6 @@ class AddDatosComplementarios extends Migration
      */
     public function down()
     {
-        Schema::drop('datos_complementarios');
+        Schema::dropIfExists('datos_complementarios');
     }
 }

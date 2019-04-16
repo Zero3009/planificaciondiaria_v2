@@ -33,10 +33,14 @@ class PlanificacionInfo extends Migration
             $table->boolean('estado')->default(true);
             $table->string('tipo_geometria', 20 );
 
-            $table->date('fecha_planificada');
+            $table->date('fecha_planificada')->nullable();
 
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
+
+            $table->json('datos_complementarios')->nullable();
+            $table->string('progreso', 30)->default('planificado');
+            
             $table->timestamps();
             
         });
@@ -49,6 +53,6 @@ class PlanificacionInfo extends Migration
      */
     public function down()
     {
-        Schema::drop('planificacion_info');
+        Schema::dropIfExists('planificacion_info');
     }
 }

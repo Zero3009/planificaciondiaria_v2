@@ -31,5 +31,6 @@ class UsersInfo extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('users_info');
     }
 }

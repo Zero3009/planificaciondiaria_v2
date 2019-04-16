@@ -26,6 +26,6 @@ class IdSolicitudes extends Migration
      */
     public function down()
     {
-        Schema::drop('id_solicitudes');
+        Schema::dropIfExists('id_solicitudes');
     }
 }

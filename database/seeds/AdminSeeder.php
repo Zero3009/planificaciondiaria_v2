@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 
-class DatabaseSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RolesTableSeeder::class);
     	$user = config('roles.defaultUserModel')::find(1);
     	$user->attachRole(1);
     }

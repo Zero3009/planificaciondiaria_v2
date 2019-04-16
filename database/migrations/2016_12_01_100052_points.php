@@ -28,6 +28,6 @@ class Points extends Migration
      */
     public function down()
     {
-        Schema::drop('points');
+        Schema::dropIfExists('points');
     }
 }

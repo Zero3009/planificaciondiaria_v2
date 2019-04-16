@@ -28,6 +28,6 @@ class Polygons extends Migration
      */
     public function down()
     {
-        Schema::drop('polygons');
+        Schema::dropIfExists('polygons');
     }
 }

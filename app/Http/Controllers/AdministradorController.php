@@ -223,8 +223,8 @@ class AdministradorController extends Controller
             $query->save();
 
             UserInfo::create([
-            'id_user' => $query->id,
-            'id_area' => $request['area']
+                'id_user' => $query->id,
+                'id_area' => $request['area']
             ]);
 
             $query->roles()->attach($request->roles);

@@ -19,7 +19,7 @@
                         </div>
                     @endif 
             <!-- FIN MOSTRAR ERROR -->
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nombre de usuario</label>
 
                             <div class="col-md-6">

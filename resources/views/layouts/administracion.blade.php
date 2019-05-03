@@ -61,35 +61,35 @@
                 <section class="sidebar">
                     <ul class="sidebar-menu" id= "ui">
                         <li class="header">PANEL DE CONTROL</li>
-                        <li class="{{ Request::segment(2) === 'dashboard' ? 'active' : null }}">
-                            <a href="/admin/dashboard"><i class='glyphicon glyphicon-dashboard'></i><span>Dashboard</span></a>
+                        <li class="{{ Request::segment(2) === 'dashboard' || Request::segment(3) === 'dashboard' ? 'active' : null }}">
+                            <a href="{{route('dashboard')}}"><i class='glyphicon glyphicon-dashboard'></i><span>Dashboard</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'usuarios' ? 'active' : null }}">
-                            <a href="/admin/usuarios"><i class='glyphicon glyphicon-user'></i> <span>Gestionar usuarios</span></a>
+                        <li class="{{ Request::segment(2) === 'usuarios' || Request::segment(3) === 'usuarios' ? 'active' : null }}">
+                            <a href="{{route('usuarios')}}"><i class='glyphicon glyphicon-user'></i> <span>Gestionar usuarios</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'etiquetas' ? 'active' : null }}">
-                            <a href="/admin/etiquetas"><i class='glyphicon glyphicon-tag'></i> <span>Gestionar etiquetas</span></a>
+                        <li class="{{ Request::segment(2) === 'etiquetas' || Request::segment(3) === 'etiquetas' ? 'active' : null }}">
+                            <a href="{{route('etiquetas')}}"><i class='glyphicon glyphicon-tag'></i> <span>Gestionar etiquetas</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'estilos' ? 'active' : null }}">
-                            <a href="/admin/estilos"><i class='glyphicon glyphicon-tint'></i> <span>Gestionar estilos</span></a>
+                        <li class="{{ Request::segment(2) === 'estilos' || Request::segment(3) === 'estilos' ? 'active' : null }}">
+                            <a href="{{route('estilos')}} "><i class='glyphicon glyphicon-tint'></i> <span>Gestionar estilos</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'areasconfig' ? 'active' : null }}">
-                            <a href="/admin/areasconfig"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar areas</span></a>
+                        <li class="{{ Request::segment(2) === 'areasconfig' || Request::segment(3) === 'areasconfig' ? 'active' : null }}">
+                            <a href="{{route('areasconfig')}}"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar areas</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'equipo' ? 'active' : null }}">
-                            <a href="/admin/equipo"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar equipo</span></a>
+                        <li class="{{ Request::segment(2) === 'equipo' || Request::segment(3) === 'equipo' ? 'active' : null }}">
+                            <a href="{{route('equipo')}}"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar equipo</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'capasutiles' ? 'active' : null }}">
-                            <a href="/admin/capasutiles"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar capas utiles</span></a>
+                        <li class="{{ Request::segment(2) === 'capasutiles' || Request::segment(3) === 'capasutiles' ? 'active' : null }}">
+                            <a href="{{route('capasutiles')}}"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar capas utiles</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'importar' ? 'active' : null }}">
-                            <a href="/admin/importar"><i class='glyphicon glyphicon-export'></i> <span>Importar</span></a>
+                        <li class="{{ Request::segment(2) === 'importar' || Request::segment(3) === 'importar' ? 'active' : null }}">
+                            <a href="{{route('importar')}}"><i class='glyphicon glyphicon-export'></i> <span>Importar</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'exportar' ? 'active' : null }}">
-                            <a href="/admin/exportar"><i class='glyphicon glyphicon-export'></i> <span>Exportar</span></a>
+                        <li class="{{ Request::segment(2) === 'exportar' || Request::segment(3) === 'exportar' ? 'active' : null }}">
+                            <a href="{{route('exportar')}}"><i class='glyphicon glyphicon-export'></i> <span>Exportar</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'datoscomplementarios' ? 'active' : null }}">
-                            <a href="/admin/datoscomplementarios"><i class= 'glyphicon glyphicon-export'></i><span>Datos complementarios</span></a>
+                        <li class="{{ Request::segment(2) === 'datoscomplementarios' || Request::segment(3) === 'datoscomplementarios' ? 'active' : null }}">
+                            <a href="{{route('datoscomplementarios')}}"><i class= 'glyphicon glyphicon-export'></i><span>Datos complementarios</span></a>
                         </li>
                     </ul>
                 </section>

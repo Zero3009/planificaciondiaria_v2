@@ -60,7 +60,7 @@ class ServiciosSuaController extends Controller
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://t-sua.rosario.gob.ar/sua-auth/auth/login',
+            CURLOPT_URL => 'https://sua.rosario.gob.ar/sua-auth/auth/login',
             CURLOPT_HTTPHEADER => array('Content-Type:application/json'),
             CURLOPT_POST => 1,
             CURLOPT_POSTFIELDS => json_encode(array(
@@ -107,7 +107,7 @@ class ServiciosSuaController extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://t-sua.rosario.gob.ar/sua-api/area/'.$post['id_area'].'/equipos',
+            CURLOPT_URL => 'https://sua.rosario.gob.ar/sua-api/area/'.$post['id_area'].'/equipos',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type:application/json',
                 'X-Authorization: Bearer '.$post['token'].'',
@@ -177,7 +177,7 @@ class ServiciosSuaController extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://t-sua.rosario.gob.ar/sua-api/solicitudes/'.$post['id_solicitud'].'/asignar/'.$post['id_area'],
+            CURLOPT_URL => 'https://.rosario.gob.ar/sua-api/solicitudes/'.$post['id_solicitud'].'/asignar/'.$post['id_area'],
             CURLOPT_HTTPHEADER => array(
                 'Content-Type:application/json',
                 'X-Authorization: Bearer '.$post['token'].'',

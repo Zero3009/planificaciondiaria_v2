@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Loguear</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}        
         <div class="alert alert-warning" role="alert" id="ocultar">
             <!--MOSTRAR ERROR DE LOGIN -->

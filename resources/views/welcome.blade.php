@@ -102,23 +102,23 @@
 <script type="text/javascript">
 $(document).ready( function () {
     $('#pagina-1').click(function() {
-        window.location.href = '/planificacion';
+        window.location.href = "{{route('planificacion')}}" ;
         return false;
     });
     $('#pagina-2').click(function() {
-        window.location.href = '/visualizador';
+        window.location.href = "{{route('visualizador')}}";
         return false;
     });
     $('#pagina-3').click(function() {
-        window.location.href = '/admin/dashboard';
+        window.location.href = "{{route('dashboard')}}" ;
         return false;
     });
     $('#pagina-4').click(function() {
-        window.location.href = '/serviciosua';
+        window.location.href = "{{route('serviciosua')}}" ;
         return false;
     });
     $('#pagina-5').click(function() {
-        window.location.href = '/formproblemas';
+        window.location.href = "{{route('formproblemas')}}" ;
         return false;
     });
 });

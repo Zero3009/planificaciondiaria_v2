@@ -4,7 +4,7 @@
 
   <!-- Mensajes de error-->
 
-    @if($errors->has())
+    @if(count($errors) > 0)
         <div class="alert alert-warning" role="alert" id="ocultar">
            @foreach ($errors->all() as $error)
               <div>{{ $error }}</div>
@@ -12,7 +12,7 @@
         </div>
     @endif 
 
-    <form method="POST" action="/admin/areasconfig/editar/post" accept-charset="UTF-8" class="form-horizontal">
+    <form method="POST" action="{{route('areasconfig_editar_post')}}" accept-charset="UTF-8" class="form-horizontal">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
@@ -115,7 +115,7 @@ $("#equipo").select2({
     tokenSeparators: [','],
 });
 
-$.getJSON("/ajax/tags", function (json) {
+$.getJSON("{{route('ajax_tags')}}", function (json) {
     $.each(json, function(i, item) {
         if(item.grupo == "secretaria"){
             if(item.id_tag != $("#secretaria").val()){
@@ -138,7 +138,7 @@ function handleClick(cb){
     }
 }   
 
-$.getJSON("/ajax/roles", function (json) {
+$.getJSON("{{route('ajax_roles')}}", function (json) {
     $("#roles").select2({
         data: json,
         language: "es",
@@ -171,10 +171,12 @@ jQuery(document).ready(function () {
 });
 
 $(function(){
+    var ajax = '{{route("datatables_datoscomplementarios", ["id"])}}';
+    ajax = ajax.replace('id', $('#id_area').val());
     var table =  $('#table').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": '/datatables/datoscomplementarios/' + $('#id_area').val(),
+            "ajax": ajax,//"{{route('datatables_datoscomplementarios', ["+ id_gg +"])}}",
             "columns":[
                 {data: 'id', name: 'id'},
                 {data: 'desc_corta', name: 'desc_corta'},

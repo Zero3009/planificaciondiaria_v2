@@ -246,8 +246,8 @@ class AjaxController extends Controller
     {
         $term = $request->term ?: '';
         $tags = DB::table ('roles')
-            ->where('display_name', 'like', $term.'%')
-            ->select('display_name AS text', 'id AS id')
+            ->where('name', 'like', $term.'%')
+            ->select('name AS text', 'id AS id')
             ->get();
         return Response::json($tags);
     }

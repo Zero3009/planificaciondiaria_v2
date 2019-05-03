@@ -220,7 +220,7 @@ class DatatablesController extends Controller
                     return '';
                 }
                 else {
-                    return '<a href="/admin/areasconfig/editar/'.$query->id_area.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a><a href="#" class="btn btn-xs btn-danger delete" data-id="'.$query->id_area.'"><i class="glyphicon glyphicon-trash"></i></a>';
+                    return '<a href="'.route('areasconfig_editar_id',[$query->id_area]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a><a href="#" class="btn btn-xs btn-danger delete" data-id="'.$query->id_area.'"><i class="glyphicon glyphicon-trash"></i></a>';
                 }
             });
 

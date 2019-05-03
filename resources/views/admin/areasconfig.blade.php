@@ -50,7 +50,7 @@
 <div class="modal fade" id="delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <form method="POST" action="/admin/areasconfig/delete" accept-charset="UTF-8" class="form-horizontal">
+            <form method="POST" action="{{route('areasconfig_delete')}}" accept-charset="UTF-8" class="form-horizontal">
                 <div class="modal-header" style="background: #4682B4; color: #FFFFFF;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="titulo"> Deshabilitar area</h4>
@@ -79,7 +79,7 @@ var table = $('#tabla-areasconfig').DataTable({
         "processing": true,
         "serverSide": true,
         "bFilter": false,
-        "ajax": '/datatables/areasconfig',
+        "ajax": "{{route('datatables_areasconfig')}}",
         "columns":[
             {data: 'id_area', name: 'areas_config.id_area'},
             {data: 'area', name: 'area.desc'},

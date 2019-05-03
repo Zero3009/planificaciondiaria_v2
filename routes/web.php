@@ -17,7 +17,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix' => 'testing'], function(){
+//Route::group(['prefix' => 'testing'], function(){
 
 	Route::auth();
 
@@ -203,4 +203,4 @@ Route::group(['prefix' => 'testing'], function(){
 	Route::get('/datatables/test', ['uses' => 'DatatablesController@getAreasPorDia']);
 	Route::get('/graphs/interv',['uses' => 'DatatablesController@getIntervData']);
 	Route::get('/visualizador/getgg', ['uses' => 'DatatablesController@makeGg']);
-});
+//});

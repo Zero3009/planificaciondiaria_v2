@@ -4,7 +4,7 @@
 
     <!-- Mensajes de error-->
 
-    @if($errors->has())
+    @if(count($errors)>0)
         <div class="alert alert-warning" role="alert" id="ocultar">
            @foreach ($errors->all() as $error)
               <div>{{ $error }}</div>

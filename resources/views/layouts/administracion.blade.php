@@ -51,7 +51,15 @@
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">              
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" style="color: white;" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    <i class="glyphicon glyphicon-log-out"></i> Cerrar sesión</a>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form> 
+                            </li>
                         </ul>
                     </div>
                 </nav>

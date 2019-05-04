@@ -61,7 +61,7 @@
     </div>
 
     <div class="col-md-8 col-md-offset-2">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-service-block" id="pagina-5">
+        <!--<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-service-block" id="pagina-5">
             <div class="nb-service-block-inner">
                 <div class="nb-service-front">
                     <div class="front-content">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-service-block" id="pagina-4">
             <div class="nb-service-block-inner">

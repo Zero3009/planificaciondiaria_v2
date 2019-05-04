@@ -31,7 +31,14 @@
         @else
             <a href="/formproblemas/tabla" style="color: white;"><h4>Ver tabla</h4></a>
         @endif
-        <a href="{{ url('/logout') }}" style="color: white;">Cerrar sesión</a> 
+        <a class="dropdown-item" style="color: white;" href="{{ route('logout') }}"
+           onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();">
+            <i class="glyphicon glyphicon-log-out"></i> Cerrar sesión</a>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form> 
 
     </div>
 

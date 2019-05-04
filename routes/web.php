@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', 'role:developer|area|administracion']], function() {
+Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
 	Route::get('/planificacion', 'PlanificacionController@Index')->name('planificacion');
 	Route::group(['prefix' => 'planificacion'], function(){
 		Route::post('/guardar', ['uses' => 'PlanificacionController@store']);
@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth', 'role:developer|area|administracion']], f
 	//Route::post('/planificacion/poligonizar', ['uses' => 'PlanificacionController@Poligonizar']);
 });
 
-Route::group(['middleware' => ['auth', 'role:developer|area|administracion', 'checkArea:Arbolado,Dpto Técnico']], function() {
+Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion', 'checkArea:Arbolado,Dpto Técnico']], function() {
 	Route::get('/formproblemas', 'FormProblemasController@Index')->name('formproblemas');
 	Route::group(['prefix' => 'formproblemas'], function(){
 		Route::get('/tabla', ['uses' => 'FormProblemasController@IndexTabla']);
@@ -44,13 +44,13 @@ Route::group(['prefix' => 'visualizador'], function(){
 	Route::get('/trazasxid/{ids_trazas}', ['uses' => 'VisualizadorController@getTrazasbyID']);
 });
 //DASHBOARD
-Route::group(['middleware' => ['auth', 'role:developer|area|administracion']], function() {
+Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
 	Route::get('/dashboard', 'DashboardController@Index');
 	Route::get('/dashboard/datosindex', ['uses' => 'DashboardController@getDatosIndex']);
 });
 
 //DASHBOARD
-Route::group(['middleware' => ['auth', 'role:developer|area|administracion']], function() {
+Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
 	Route::get('/logistica', 'LogisticaController@Index');
 	Route::post('/ordenservicio/nueva', 'LogisticaController@create');
 	Route::get('/ordenservicio/listar-planificacion', ['uses' => 'LogisticaController@listarPlanificacion']);
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth', 'role:developer|area|administracion']], f
 });
 
 //SERVICIOS SUA
-Route::group(['middleware' => ['auth', 'role:developer'],], function() {
+Route::group(['middleware' => ['web', 'auth', 'role:developer'],], function() {
 	Route::get('/serviciosua', 'ServiciosSuaController@Index')->name('serviciosua');
 	Route::group(['prefix' => 'serviciosua'], function(){
 		Route::get('/serviciosua/intervenciones', ['uses' => 'ServiciosSuaController@IndexIntervenciones']);
@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'role:developer'],], function() {
 		Route::get('/ajax/getidsolicitudes/{nro}/{anio}', 	['uses' => 'AjaxController@getIdSolicitudes']);
 });
 
-Route::group(['middleware' => ['auth', 'role:developer|administracion']], function() {
+Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']], function() {
 	Route::group(['prefix' => 'admin'], function(){
 		Route::get('/dashboard', 'AdministradorController@Index')->name('dashboard');
 

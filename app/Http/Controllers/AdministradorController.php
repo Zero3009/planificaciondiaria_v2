@@ -159,17 +159,18 @@ class AdministradorController extends Controller
             $prueba = array();
 
             //Eliminar roles
-            foreach ($query->roles as $key => $value) {
+            /*foreach ($query->roles as $key => $value) {
                 array_push($prueba, $value->id);
                 if (!in_array($value->id, $request->roles)) {
                     $query->roles()->detach($value->id);
                 }
-            }
+            }*/
+            $query->detachAllRoles();
 
             //Agregar roles
             foreach ($request->roles as $key => $value) {
                 if (!in_array($value, $prueba)) {
-                    $query->roles()->attach($value);
+                    $query->attachRole($value);
                 }
             }
 
@@ -227,7 +228,7 @@ class AdministradorController extends Controller
                 'id_area' => $request['area']
             ]);
 
-            $query->roles()->attach($request->roles);
+            $query->attachRole($request->roles);
 
             //Commit y redirect con success
             DB::commit();

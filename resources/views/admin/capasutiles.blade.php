@@ -12,7 +12,7 @@
                     </div>
 
                     <div class="col-md-8" style="float: right;">
-                        <a class="btn btn-success" href="/admin/capasutiles/nuevo" style="float: right;">
+                        <a class="btn btn-success" href="{{ route('capasutiles_nuevo') }}" style="float: right;">
                         <i class="fa fa-plus"></i> Nuevo</a>
                     </div>
                 </div>

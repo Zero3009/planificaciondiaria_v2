@@ -10,7 +10,7 @@
                 		<h3 class="panel-title">DATOS COMPLEMENTARIOS</h3>
                 	</div>
                 	<div class="col-md-8" style="float: right;">
-                         <a class="btn btn-success" href="/admin/datoscomplementarios/nuevo" style="float: right;">
+                         <a class="btn btn-success" href="{{ route('datoscomplementarios_nuevo') }}" style="float: right;">
                         <i class="fa fa-plus"></i> Nuevo</a>
                 	</div>
             	</div>

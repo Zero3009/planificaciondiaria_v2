@@ -25,15 +25,15 @@ class RolesTableSeeder extends Seeder
                 'level'       => 5,
             ],
             [
-                'name'        => 'Administracion',
+                'name'        => 'Administración',
                 'slug'        => 'administracion',
-                'description' => 'User Role',
+                'description' => 'Administracion',
                 'level'       => 3,
             ],
             [
                 'name'        => 'Area',
                 'slug'        => 'area',
-                'description' => 'User Role',
+                'description' => 'Area',
                 'level'       => 1,
             ],
             [

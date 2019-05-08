@@ -20,7 +20,7 @@
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-left">
-                <a class="navbar-brand" href="{{ url('/') }}"><img src="/img/logo.png" alt="Dispute Bills"></a>
+                <a class="navbar-brand" href="{{ route('welcome') }}"><img src="/img/logo.png" alt="Dispute Bills"></a>
             </div>
             <div class="navbar-right">
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -29,7 +29,7 @@
                             <!-- Authentication Links -->
                             @if (Auth::guest())
                                 <li class="dropdown" style="float: right;margin-right: 20px;">
-                                    <a href="{{ url('/login') }}" style="color: white;"><i class="glyphicon glyphicon-log-in"></i> Iniciar sesión</a>
+                                    <a href="{{ route('login') }}" style="color: white;"><i class="glyphicon glyphicon-log-in"></i> Iniciar sesión</a>
                                 </li>
                             @else
                                 <li class="dropdown" style="float: right;margin-right: 20px;">

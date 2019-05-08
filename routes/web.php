@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
 	Route::get('/planificacion', 'PlanificacionController@Index')->name('planificacion');
@@ -61,13 +61,13 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracio
 Route::group(['middleware' => ['web', 'auth', 'role:developer'],], function() {
 	Route::get('/serviciosua', 'ServiciosSuaController@Index')->name('serviciosua');
 	Route::group(['prefix' => 'serviciosua'], function(){
-		Route::get('/serviciosua/intervenciones', ['uses' => 'ServiciosSuaController@IndexIntervenciones']);
-		Route::get('/serviciosua/asignaciones', ['uses' => 'ServiciosSuaController@IndexAsignaciones']);
-		Route::get('/serviciosua/resoluciones', ['uses' => 'ServiciosSuaController@IndexResoluciones']);
-		Route::get('/serviciosua/cargarids', ['uses' => 'ServiciosSuaController@IndexCargarIDs']);
-		Route::post('/serviciosua/procesarids', ['uses' => 'ServiciosSuaController@procesarIds']);
+		Route::get('/intervenciones', 'ServiciosSuaController@IndexIntervenciones')->name('serviciosua_intervenciones');
+		Route::get('/asignaciones', 'ServiciosSuaController@IndexAsignaciones')->name('serviciosua_asignaciones');
+		Route::get('/resoluciones', 'ServiciosSuaController@IndexResoluciones')->name('serviciosua_resoluciones');
+		Route::get('/cargarids', 'ServiciosSuaController@IndexCargarIDs')->name('serviciosua_cargarids');
+		Route::post('/procesarids', 'ServiciosSuaController@procesarIds')->name('serviciosua_procesarids');
 	});
-		Route::get('/ajax/getidsolicitudes/{nro}/{anio}', 	['uses' => 'AjaxController@getIdSolicitudes']);
+	Route::get('/ajax/getidsolicitudes/{nro}/{anio}', 	['uses' => 'AjaxController@getIdSolicitudes']);
 });
 
 Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']], function() {
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 		Route::group(['prefix' => 'usuarios'], function(){
 			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditView']);
 			Route::post('/editar', ['uses' => 'AdministradorController@EditUpdate']);
-			Route::get('/registrar', ['uses' => 'AdministradorController@NewUserView']);
+			Route::get('/registrar', ['uses' => 'AdministradorController@NewUserView'])->name('usuarios_registrar');
 			Route::post('/nuevo', ['uses' => 'AdministradorController@NewUserCreate']);
 			Route::post('/delete', ['uses' => 'AdministradorController@DeleteUser']);
 		});
@@ -87,7 +87,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 		Route::get('/datoscomplementarios', ['uses' => 'AdministradorController@DatosView'])->name('datoscomplementarios');
 
 		Route::group(['prefix' => 'datoscomplementarios'], function(){
-			Route::get('/nuevo', ['uses' => 'AdministradorController@NewDatosView']);
+			Route::get('/nuevo', ['uses' => 'AdministradorController@NewDatosView'])->name('datoscomplementarios_nuevo');
 			Route::post('/nuevo/post', ['uses' => 'AdministradorController@NewDato']);
 		});
 
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 			Route::post('/delete', ['uses' => 'AdministradorController@DeleteEtiqueta']);
 			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditViewEtiquetas']);
 			Route::post('/editar', ['uses' => 'AdministradorController@EditUpdateEtiquetas']);
-			Route::get('/nueva', ['uses' => 'AdministradorController@NewEtiquetaView']);
+			Route::get('/nueva', ['uses' => 'AdministradorController@NewEtiquetaView'])->name('etiquetas_nuevo');
 			Route::post('/nueva/post', ['uses' => 'AdministradorController@NewEtiquetaCreate']);
 		});
 
@@ -108,7 +108,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 
 		Route::get('/equipo', ['uses' => 'AdministradorController@GestionarEquipo'])->name('equipo');
 		Route::group(['prefix' => 'equipo'], function(){
-			Route::get('/equipo/nuevo', ['uses' => 'AdministradorController@NewEquipoView']);
+			Route::get('/equipo/nuevo', ['uses' => 'AdministradorController@NewEquipoView'])->name('equipo_nuevo');
 			Route::get('/equipo/editar/{id}', ['uses' => 'AdministradorController@EditEquipoView']);
 			Route::post('/equipo/editar/post', ['uses' => 'AdministradorController@EditEquipoUpdate']);
 			Route::post('/equipo/nuevo/post', ['uses' => 'AdministradorController@NewEquipoConfig']);
@@ -117,7 +117,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 		
 		Route::get('/areasconfig', ['uses' => 'AdministradorController@GestionarAreasConfig'])->name('areasconfig');
 		Route::group(['prefix' => 'areasconfig'], function(){
-			Route::get('/nuevo', ['uses' => 'AdministradorController@NewAreaView']);
+			Route::get('/nuevo', ['uses' => 'AdministradorController@NewAreaView'])->name('areasconfig_nuevo');
 			Route::get('/editar/{id}', ['uses' => 'AdministradorController@EditAreaView'])->name('areasconfig_editar_id');
 			Route::post('/editar/post', ['uses' => 'AdministradorController@EditAreaUpdate'])->name('areasconfig_editar_post');
 			Route::post('/nuevo/post', ['uses' => 'AdministradorController@NewAreaConfig']);
@@ -126,7 +126,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 
 		Route::get('/capasutiles', ['uses' => 'AdministradorController@GestionarCapasUtiles'])->name('capasutiles');
 		Route::group(['prefix' => 'capasutiles'], function(){
-			Route::get('/nuevo', ['uses' => 'AdministradorController@NewCapaView']);
+			Route::get('/nuevo', ['uses' => 'AdministradorController@NewCapaView'])->name('capasutiles_nuevo');
 			Route::post('/nuevo/post', ['uses' => 'AdministradorController@NewCapa']);
 			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditCapaView']);
 			Route::post('/editar', ['uses' => 'AdministradorController@EditCapaUpdate']);

@@ -440,9 +440,15 @@
             $("#tabla").modal();
         }).addTo(map);
 
-        L.browserPrint({
+        L.control.browserPrint({
             title: 'Sistema de Planificación Diaria',
-            printModes: ["Portrait", "Landscape", "Auto", "Custom"]
+            documentTitle: 'Sistema de Planificación Diaria',
+            printModes: [
+                L.control.browserPrint.mode.landscape('Horizontal', "A4"),
+                L.control.browserPrint.mode.portrait('Vertical', "A4"),
+                L.control.browserPrint.mode.auto("Automatico", "A4"),
+                L.control.browserPrint.mode.custom("Seleccione una zona", "A4")
+            ],
         }).addTo(map);
 
         $(function() {

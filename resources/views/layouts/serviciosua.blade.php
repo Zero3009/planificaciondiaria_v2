@@ -56,7 +56,7 @@
         <div class="wrapper">
             {{-- HEADER --}}
             <header class="main-header">
-                <a href="{{ url('/') }}" class="logo" style="background-color: #0c99ce;">
+                <a href="{{ route('welcome') }}" class="logo" style="background-color: #0c99ce;">
                     <span class="logo-mini"><b>P</b>YP</span>{{-- mini logo --}}
                      <img src="/img/logo.png" alt="Dispute Bills">
                 </a>
@@ -83,16 +83,19 @@
                     <ul class="sidebar-menu">
                         <li class="header">PANEL DE CONTROL</li>
                         <li class="active">
-                            <a href="/serviciosua"><i class='glyphicon glyphicon-home'></i><span>Home</span></a>
+                            <a href="{{route('serviciosua')}}"><i class='glyphicon glyphicon-home'></i><span>Home</span></a>
                         </li>
                         <li>
-                            <a href="/serviciosua/intervenciones"><i class='glyphicon glyphicon-user'></i> <span>Intervenciones</span></a>
+                            <a href="{{route('serviciosua_asignaciones')}}"><i class='glyphicon glyphicon-user'></i> <span>Asignaciones</span></a>
                         </li>
                         <li>
-                            <a href="/serviciosua/resoluciones"><i class='glyphicon glyphicon-user'></i> <span>Resoluciones</span></a>
+                            <a href="{{route('serviciosua_intervenciones')}}"><i class='glyphicon glyphicon-user'></i> <span>Intervenciones</span></a>
                         </li>
                         <li>
-                            <a href="/serviciosua/cargarids"><i class='glyphicon glyphicon-user'></i> <span>Cargar IDs de solicitudes</span></a>
+                            <a href="{{route('serviciosua_resoluciones')}}"><i class='glyphicon glyphicon-user'></i> <span>Resoluciones</span></a>
+                        </li>
+                        <li>
+                            <a href="{{route('serviciosua_cargarids')}}"><i class='glyphicon glyphicon-user'></i> <span>Cargar IDs de solicitudes</span></a>
                         </li>
                     </ul>
                 </section>

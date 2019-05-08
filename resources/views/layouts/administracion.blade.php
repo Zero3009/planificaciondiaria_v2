@@ -37,6 +37,8 @@
     <script type="text/javascript" src="/plugins/Chart.bundle.js"></script>
     <script type="text/javascript" src="/plugins/datatables/datatables.bootstrap.js"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.2/xlsx.full.min.js"></script> 
+    
 </head>
 
     <body class="skin-blue sidebar-mini">

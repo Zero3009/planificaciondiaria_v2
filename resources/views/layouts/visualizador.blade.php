@@ -24,7 +24,6 @@
     <!-- Otros -->
     <link rel="stylesheet" href="/ubicaciones.css" />
     <link rel="stylesheet" href="/estilos.css" />
-    <link rel="stylesheet" href="/css/print.css" />
 
 <!-- JAVASCRIPTS -->
     <!-- Jquery -->

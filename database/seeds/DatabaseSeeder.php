@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolesTableSeeder::class);
-    	//<$user = config('roles.defaultUserModel')::find(1);
-    	//$user->attachRole(1);
+        $this->call(MigracionUsuariosSeeder::class);
     }
 }

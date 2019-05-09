@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="/plugins/jQuery/jquery-ui.theme.min.css" />
     <link rel="stylesheet" href="/plugins/bootstrap-3.3.7/css/bootstrap.min.css" />
     @yield('template_linked_css')
+
+    <style type="text/css">
+        @yield('template_fastload_css')
+    </style>
     
 </head>
 <body id="app-layout">  

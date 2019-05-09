@@ -134,25 +134,25 @@
  >               </div>
                 </form>
                 <div class="table-responsive">
-                <table class="table table-striped table-bordered dataTable" id="tabla-geometrias" style="width:100%;">
-                    <thead style="width:100%;">
-                        <tr>
-                            <th>ID</th>
-                            <th>Area</th>
-                            <th>Descripcion</th>
-                            <th>Tipo de trabajo</th>
-                            <th>Horario</th>
-                            <th>Calle/Zona</th>
-                            <th>Tipo de figura</th>
-                            <th>Datos complementarios</th>
-                            <th>Corte de calzada</th>
-                            <th>Fecha</th>
-                            <th>Acciones</th>
-                            <th>Observaciones</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+                    <table class="table table-striped table-bordered dataTable" id="tabla-geometrias" style="width:100%;">
+                        <thead style="width:100%;">
+                            <tr>
+                                <th>ID</th>
+                                <th>Area</th>
+                                <th>Descripcion</th>
+                                <th>Tipo de trabajo</th>
+                                <th>Horario</th>
+                                <th>Calle/Zona</th>
+                                <th>Tipo de figura</th>
+                                <th>Datos complementarios</th>
+                                <th>Corte de calzada</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

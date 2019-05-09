@@ -342,4 +342,27 @@ class DatatablesController extends Controller
         $datatables = app('datatables')->of($query);
         return $datatables->make(true);
     }
+
+    public function GeometriasPlanificacion(Request $request){
+
+        $geometrias = DB::table('planificacion_info')
+            ->join('tags as area', 'area.id_tag', '=', 'planificacion_info.id_area')
+            ->join('tags as corte_calzada', 'corte_calzada.id_tag', '=', 'planificacion_info.id_corte_calzada')
+            ->join('tags as tipo_trabajo', 'tipo_trabajo.id_tag', '=', 'planificacion_info.id_tipo_trabajo')
+            ->select(['planificacion_info.id_info', 'planificacion_info.id_area', 'planificacion_info.descripcion', 'planificacion_info.id_tipo_trabajo', 'planificacion_info.horario', 'planificacion_info.callezona', 'planificacion_info.id_corte_calzada', 'planificacion_info.tipo_geometria', 'planificacion_info.fecha_planificada', 'planificacion_info.id_usuario', 'area.desc AS area', 'corte_calzada.desc as corte_calzada', 'tipo_trabajo.desc as tipo_trabajo', 'planificacion_info.datos_complementarios', 'planificacion_info.created_at']);
+
+        $datatables = app('datatables')->of($geometrias)
+            ->setRowId('id_info')
+            ->addColumn('action', function ($geometrias) {
+                return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a><a href="#" class="btn btn-xs btn-info dats" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-search"></i></a>';
+            });
+
+        if ($idseleccionados = $datatables->request->get('ids')) {
+            $geometrias->whereIn('planificacion_info.id_info', $idseleccionados);
+        } else {
+            $geometrias->where('planificacion_info.id_info', 999999999);
+        }
+
+        return $datatables->make(true);
+    }
 }

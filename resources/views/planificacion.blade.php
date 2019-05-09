@@ -15,14 +15,30 @@
 <link rel="stylesheet" href="/plugins/chosen/chosen-bootstrap.css" />
 <link rel="stylesheet" href="/plugins/Leaflet.markercluster-1.4.1/MarkerCluster.css" />
 <link rel="stylesheet" href="/plugins/Leaflet.markercluster-1.4.1/MarkerCluster.Default.css" />
+<!-- DataTables -->
+<link rel="stylesheet" href="/plugins/datatables/datatables.bootstrap.min.css" />
+<link rel="stylesheet" href="/plugins/datatables/responsive.dataTables.min.css" />
+<link rel="stylesheet" href="/plugins/datatables/buttons/buttons.dataTables.min.css" />
 
+@endsection
+
+@section('template_fastload_css')
+    .dt-buttons {
+        float: initial !important;
+        padding-top: 5px;
+        text-align: center;
+    }
+
+    .dataTables_filter{
+        margin-right: 12px;
+    }   
 @endsection
 
 @section('content')
     
     <div class="loading" style="display: none;">Loading&#8230;</div>
     <div id="sidebar">
-        <div class="sidebar-wrapper">
+        <div class="sidebar-wrapper" style="overflow-y: auto;">
             <div class="panel panel-default">
                 <div class="panel-heading">
                    <div class="panel-title"><b>Sistema</b> de Planificación</div>
@@ -60,39 +76,28 @@
                     <input type="hidden" value="false" id="referencia-calles">
 
                 </div>
-            </div>
-            <div id="users">
-                <div class="panel panel-default" id="features" style="margin-top: -20px;">
-                    <div class="panel-heading"><div class="panel-title"><b>Geometrias</b> creadas</div></div>
-                    <div class="panel-body">
-                      <div class="row">
-                        <div class="col-xs-8 col-md-8">
-                          <input type="text" class="form-control search" placeholder="Filtrar">
-                        </div>
-                        <div class="col-xs-4 col-md-4">
-                          <button type="button" class="btn btn-primary pull-right sort asc" data-sort="feature-name" data-toggle="tooltip" data-placement="right" title="Ordenar alfabeticamente" id="sort-btn"><i class="glyphicon glyphicon-sort-by-alphabet"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="sidebar-table" style="margin-top: -52px;">
-                    <table class="table table-hover" id="feature-list">
-                        <thead class="hidden">
+
+                <div class="panel-heading"><div class="panel-title"><b>Geometrias</b> creadas</div></div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered dataTable" id="tabla-geometrias" style="width:100%;">
+                        <thead style="width:100%;">
                             <tr>
-                                <th>Icon</th>
-                            </tr><tr>
-                            </tr><tr>
-                                <th>Name</th>
-                            </tr><tr>
-                            </tr><tr>
-                                <th>Chevron</th>
-                            </tr><tr>
+                                <th>Calle/Zona</th>
+                                <th class="none">Area</th>
+                                <th class="none">Descripcion</th>
+                                <th class="none">Tipo de trabajo</th>
+                                <th class="none">Horario</th>
+                                <th class="none">Tipo de figura</th>
+                                <th class="none">Datos complementarios</th>
+                                <th class="none">Corte de calzada</th>
+                                <th class="none">Fecha</th>
+                                <th class="none">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody class="list">
-                        </tbody>
                     </table>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -284,6 +289,17 @@
 <script type="text/javascript" src="/plugins/leaflet/proj4leaflet.js"></script>
 <script type="text/javascript" src="/plugins/leaflet/tokml.js"></script>
 <script type="text/javascript" src="/list.js"></script>
+
+<!-- DataTables -->
+<script src="/plugins/datatables/datatables.min.js"></script>
+<script src="/plugins/datatables/datatables.bootstrap.min.js"></script>
+<script src="/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables/buttons/jszip.min.js"></script>
+<script src="/plugins/datatables/buttons/buttons.html5.min.js"></script>
+<script src="/plugins/datatables/buttons/pdfmake.min.js"></script>
+<script src="/plugins/datatables/buttons/vfs_fonts.js"></script>
+<script src="/plugins/datatables/buttons/buttons.colVis.min.js"></script>
         
 <script>
     $(document).ready( function () {
@@ -292,6 +308,7 @@
         EPSG22185 = new L.Proj.CRS('EPSG:22185', '+proj=tmerc +lat_0=-90 +lon_0=-60 +k=1 +x_0=5500000 +y_0=0 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
         EPSG900913 = new L.Proj.CRS('EPSG:900913','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs');
         var getImportById = {};
+        var arrayIds = new Array();
         var default_estilo_point = L.icon({ 
             iconUrl: '/plugins/leaflet/images/marker-icon-2x-blue.png',
             shadowUrl: '/plugins/leaflet/images/marker-shadow.png',
@@ -874,6 +891,7 @@
                 $("#feature-list tbody").append('<tr class="feature-row" id="'+feature.properties.id_info+'"><td style="vertical-align: middle;"><i class="glyphicon glyphicon-globe"></td><td class="feature-name">' + feature.properties.callezona + '</td><td class="feature-area hidden" >' + feature.properties.area + '</td><td class="feature-trabajo hidden" >' + feature.properties.tipo_trabajo + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
             }
             if (feature.properties.id_info) {
+                arrayIds.push(feature.properties.id_info);
                 getImportById[feature.properties.id_info] = layer;
             }
 
@@ -937,12 +955,15 @@
             $('.horario3').html(props.horario);
             $('.id3').val(props.id_info);
             $('.datos_complementarios').html("");
-            for(var p in props.datos_complementarios){
+
+            datos_json = JsonORparse(props.datos_complementarios);
+
+            for(var p in datos_json){
                 for(var i = 0;i < globalData.length; i++)
                 {
                     if(globalData[i].desc_corta == p)
                     {
-                        $(".datos_complementarios").append('<div class="form-group"><span class="control-label col-sm-5"><b>'+globalData[i].desc_larga +':</b></span><div class="col-sm-7" style="padding-top: 8px;"><span class="dato_complementario"/>'+props.datos_complementarios[p]+'</span></div></div>');
+                        $(".datos_complementarios").append('<div class="form-group"><span class="control-label col-sm-5"><b>'+globalData[i].desc_larga +':</b></span><div class="col-sm-7" style="padding-top: 8px;"><span class="dato_complementario"/>'+datos_json[p]+'</span></div></div>');
                         break;
                     }   
                 }
@@ -972,6 +993,14 @@
                     map.removeLayer(marker);
                 }
             });   
+        }
+
+        function JsonORparse(json){
+            if (json && typeof json === "object") {
+                return json;
+            } else {
+                return JSON.parse(json);
+            }
         }
 
         //API de ubicaciones de la MR
@@ -1088,6 +1117,8 @@
             }
 
             $.getJSON('{{ route("get_estilo_capa") }}', function (estilos) {
+                //var arrayIds = new Array();
+                arrayIds.length = 0;
                 var data = {
                     "area": $('#area').val(),
                     "fecha_planificada": $('#fecha_planificada').val(),
@@ -1228,6 +1259,8 @@
                         console.log(error);
                     }
                 });
+                console.log(arrayIds);
+                initDatatable(arrayIds);
             });
         }
 
@@ -1420,7 +1453,8 @@
             //Datos complementarios
             $(".datos select").each(function (){
                 selects = this;
-                $.each(JSON.parse(layer.feature.properties.datos_complementarios), function(item, value){
+                datos_json = JsonORparse(layer.feature.properties.datos_complementarios);
+                $.each(datos_json, function(item, value){
                     if($(selects).attr("name") == item){
                         $(selects).val(value);
                     }
@@ -1428,7 +1462,8 @@
             });
             $(".datos input").each(function (){
                 inputs = this;
-                $.each(JSON.parse(layer.feature.properties.datos_complementarios), function(item, value){
+                datos_json = JsonORparse(layer.feature.properties.datos_complementarios);
+                $.each(datos_json, function(item, value){
                     if($(inputs).attr("name") == item){
                         $(inputs).val(value);
                     }
@@ -1495,6 +1530,53 @@
         });
         $('[data-toggle="tooltip"]').tooltip();
 
+        function searchData(){
+            return arrayIds;
+        }
+
+        function initDatatable(){
+            if (!$.fn.dataTable.isDataTable('#tabla-geometrias')) {
+                $('#tabla-geometrias').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "responsive": true,
+                    "paging": false,
+                    "info": false,
+                    ajax: {
+                        url: '{{ route("datatables_geometrias-planificacion") }}',
+                        data: function (d) {
+                            d.ids = searchData();
+                        },
+                    },
+                    "columns":[
+                        {data: 'callezona', name: 'planificacion_info.callezona', responsivePriority: 1},
+                        {data: 'area', name: 'area.desc'},
+                        {data: 'descripcion', name: 'planificacion_info.descripcion'},
+                        {data: 'tipo_trabajo', name: 'tipo_trabajo.desc'},
+                        {data: 'horario', name: 'planificacion_info.horario'},
+                        {data: 'corte_calzada', name: 'corte_calzada.desc'},
+                        {data: 'tipo_geometria', name: 'planificacion_info.tipo_geometria'},
+                        {data: 'datos_complementarios', name: 'planificacion_info.datos_complementarios'},
+                        {data: 'fecha_planificada', name: 'planificacion_info.fecha_planificada'},
+                        {data: 'action', name: 'action' , orderable: false, searchable: false}
+                    ],
+                    "language":{
+                        url: "{!! asset('/plugins/datatables/lenguajes/spanish.json') !!}"
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: 'Exportar a excel'
+                        },
+                    ],
+                });
+            } else {
+                $('#tabla-geometrias').DataTable().ajax.reload();
+                console.log("reload");
+            }
+        }
     });
 </script>
 

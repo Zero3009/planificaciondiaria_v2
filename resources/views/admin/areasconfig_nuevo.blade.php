@@ -4,7 +4,7 @@
 
   <!-- Mensajes de error-->
 
-    @if($errors->has())
+    @if(count($errors) > 0)
         <div class="alert alert-warning" role="alert" id="ocultar">
            @foreach ($errors->all() as $error)
               <div>{{ $error }}</div>
@@ -12,7 +12,7 @@
         </div>
     @endif 
 
-    <form method="POST" action="/admin/areasconfig/nuevo/post" accept-charset="UTF-8" class="form-horizontal">
+    <form method="POST" action="{{ route('areasconfig_post') }}" accept-charset="UTF-8" class="form-horizontal">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
@@ -54,7 +54,7 @@
 
 <script>
 
-$.getJSON("/ajax/tags", function (json) {
+$.getJSON("{{ route('ajax_tags') }}", function (json) {
     $.each(json, function(i, item) {
         if(item.grupo == "secretaria"){
             $('#secretaria').append('<option value="'+item.id_tag+'"">'+item.desc+'</option>');
@@ -65,7 +65,7 @@ $.getJSON("/ajax/tags", function (json) {
     });
 });
 
-$.getJSON("/ajax/roles", function (json) {
+$.getJSON("{{ route('ajax_roles') }}", function (json) {
     $("#roles").select2({
         data: json,
         language: "es",

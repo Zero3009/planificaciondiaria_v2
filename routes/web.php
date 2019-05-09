@@ -20,12 +20,11 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
 	Route::get('/planificacion', 'PlanificacionController@Index')->name('planificacion');
 	Route::group(['prefix' => 'planificacion'], function(){
-		Route::post('/guardar', ['uses' => 'PlanificacionController@store']);
-		Route::post('/update/{id_info}', ['uses' => 'PlanificacionController@update']);
-		Route::post('/updategeometry', ['uses' => 'PlanificacionController@updateGeometry']);
-		Route::post('/baja', ['uses' => 'PlanificacionController@baja']);
+		Route::post('/guardar', 'PlanificacionController@store')->name('planificacion_guardar');
+		Route::post('/update/{id_info}', 'PlanificacionController@update')->name('planificacion_update');
+		Route::post('/updategeometry', 'PlanificacionController@updateGeometry')->name('planificacion_update_geom');
+		Route::post('/baja', 'PlanificacionController@baja')->name('planificacion_baja');
 	});
-	//Route::post('/planificacion/poligonizar', ['uses' => 'PlanificacionController@Poligonizar']);
 });
 
 Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion', 'checkArea:Arbolado,Dpto Técnico']], function() {
@@ -120,7 +119,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 			Route::get('/nuevo', ['uses' => 'AdministradorController@NewAreaView'])->name('areasconfig_nuevo');
 			Route::get('/editar/{id}', ['uses' => 'AdministradorController@EditAreaView'])->name('areasconfig_editar_id');
 			Route::post('/editar/post', ['uses' => 'AdministradorController@EditAreaUpdate'])->name('areasconfig_editar_post');
-			Route::post('/nuevo/post', ['uses' => 'AdministradorController@NewAreaConfig']);
+			Route::post('/nuevo/post', ['uses' => 'AdministradorController@NewAreaConfig'])->name('areasconfig_post');
 			Route::post('/delete', ['uses' => 'AdministradorController@DeleteArea'])->name('areasconfig_delete');
 		});
 
@@ -154,17 +153,17 @@ Route::group(['prefix' => 'ajax'], function(){
 	Route::get('/legend', ['uses' => 'AjaxController@getLegend']);
 	Route::get('/capasutiles', ['uses' => 'AjaxController@getCapasUtiles']);
 
-	Route::get('/estilo_capa', ['uses' => 'AjaxController@getEstilosCapas']);
+	Route::get('/estilo_capa', ['uses' => 'AjaxController@getEstilosCapas'])->name('get_estilo_capa');
 	Route::get('/formtable', ['uses' => 'AjaxController@getDatosFormTable']);
 	Route::get('/datainter', ['uses' => 'AjaxController@getDatosIntervenciones']);
 
 
-	Route::post('/puntos', ['uses' => 'AjaxController@getPuntos']);
-	Route::post('/poligonos', ['uses' => 'AjaxController@getPoligonos']);
-	Route::post('/lineas', ['uses' => 'AjaxController@getLineas']);
+	Route::post('/puntos', ['uses' => 'AjaxController@getPuntos'])->name('get_puntos');
+	Route::post('/poligonos', ['uses' => 'AjaxController@getPoligonos'])->name('get_poligonos');
+	Route::post('/lineas', ['uses' => 'AjaxController@getLineas'])->name('get_lineas');
 
 	Route::get('/visualizadordetails/{id}', ['uses' => 'AjaxController@getDetailsGeometries']);
-	Route::get('/datos_complementarios_desclarga', ['uses' => 'AjaxController@getDatosDescLarga']);
+	Route::get('/datos_complementarios_desclarga', 'AjaxController@getDatosDescLarga')->name('get_datoscomplementarios');
 
 	//SERVICIOSUA
 	Route::group(['prefix' => 'serviciosua'], function(){

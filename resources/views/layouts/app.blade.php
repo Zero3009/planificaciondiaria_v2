@@ -9,49 +9,9 @@
 
     <link rel="stylesheet" href="/plugins/jQuery/jquery-ui.min.css" />
     <link rel="stylesheet" href="/plugins/jQuery/jquery-ui.theme.min.css" />
-    <link rel="stylesheet" href="/ubicaciones.css" />
     <link rel="stylesheet" href="/plugins/bootstrap-3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/plugins/leaflet/leaflet.css" />
-    <link rel="stylesheet" href="/plugins/leaflet/leaflet.draw.css" />
-    <link rel="stylesheet" href="/plugins/leaflet/easy-button.css" />
-    <link rel="stylesheet" href="/plugins/leaflet-icon-pulse-master/L.Icon.Pulse.css" />
-    <link rel="stylesheet" href="/estilos.css" />
-    <link rel="stylesheet" href="/plugins/select2-4.0.3/css/select2.min.css" />
-    <link rel="stylesheet" href="/css/mySwitch.css">
-    <link rel="stylesheet" href="/plugins/Leaflet.markercluster/MarkerCluster.css" />
-    <link rel="stylesheet" href="/plugins/Leaflet.markercluster/MarkerCluster.Default.css" />
-
-
-    <link rel="stylesheet" href="/plugins/chosen/chosen-bootstrap.css" />
-
-    <link rel="stylesheet" href="/plugins/Leaflet.markercluster-1.4.1/MarkerCluster.css" />
-    <link rel="stylesheet" href="/plugins/Leaflet.markercluster-1.4.1/MarkerCluster.Default.css" />
-
-    <script type="text/javascript" src="/plugins/randomColor/randomColor.min.js"></script>
-    <script type="text/javascript" src="/plugins/jQuery/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="/plugins/jQuery/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/leaflet.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/leaflet.draw.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/locate/es_la.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet-icon-pulse-master/L.Icon.Pulse.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/easy-button.js"></script>
-    <script type="text/javascript" src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/plugins/Leaflet.markercluster/leaflet.markercluster-src.js"></script>
-    <script type="text/javascript" src="/plugins/Leaflet.markercluster/leaflet.markercluster.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
-
-
-
-    <script type="text/javascript" src="/plugins/Leaflet.markercluster-1.4.1/leaflet.markercluster-src.js"></script>
-
-    <script type="text/javascript" src="/plugins/chosen/chosen.jquery.min.js"></script>
-
-    <script type="text/javascript" src="/ol.js"></script>
-    <script type="text/javascript" src="/ubicaciones.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/proj4.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/proj4leaflet.js"></script>
-    <script type="text/javascript" src="/plugins/leaflet/tokml.js"></script>
-    <script type="text/javascript" src="/list.js"></script>
+    @yield('template_linked_css')
+    
 </head>
 <body id="app-layout">  
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -94,13 +54,17 @@
     </div>
 
     <div id="container">
-   
-        @yield('sidebar')
-            
 
         @yield('content')
 
     </div>
 
+    {{-- Scripts --}}
+    <!-- Jquery -->
+    <script src="/plugins/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="/plugins/jQuery/jquery-ui.min.js"></script>
+    <!-- Boostrap -->
+    <script src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    @yield('footer_scripts')
 </body>
 </html>

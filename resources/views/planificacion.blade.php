@@ -1,6 +1,24 @@
-@extends('layouts.planificacion')
+@extends('layouts.app')
 
-@section('sidebar')
+@section('template_linked_css')
+
+<link rel="stylesheet" href="/ubicaciones.css" />
+<link rel="stylesheet" href="/plugins/leaflet/leaflet.css" />
+<link rel="stylesheet" href="/plugins/leaflet/leaflet.draw.css" />
+<link rel="stylesheet" href="/plugins/leaflet/easy-button.css" />
+<link rel="stylesheet" href="/plugins/leaflet-icon-pulse-master/L.Icon.Pulse.css" />
+<link rel="stylesheet" href="/estilos.css" />
+<link rel="stylesheet" href="/plugins/select2-4.0.3/css/select2.min.css" />
+<link rel="stylesheet" href="/css/mySwitch.css">
+<link rel="stylesheet" href="/plugins/Leaflet.markercluster/MarkerCluster.css" />
+<link rel="stylesheet" href="/plugins/Leaflet.markercluster/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="/plugins/chosen/chosen-bootstrap.css" />
+<link rel="stylesheet" href="/plugins/Leaflet.markercluster-1.4.1/MarkerCluster.css" />
+<link rel="stylesheet" href="/plugins/Leaflet.markercluster-1.4.1/MarkerCluster.Default.css" />
+
+@endsection
+
+@section('content')
     
     <div class="loading" style="display: none;">Loading&#8230;</div>
     <div id="sidebar">
@@ -153,7 +171,7 @@
                                     <div class="form-group">        
                                         <span class="control-label col-sm-4"><b>{{$dato_complementario->desc_larga}}</b></span>
                                         <div class="col-sm-8">
-                                            {!!$dato_complementario->html!!}
+                                            {!! $dato_complementario->html !!}
                                         </div>
                                     </div>            
                                 @endforeach
@@ -244,11 +262,28 @@
         </div>
     </div>
 
+<div id="map" class="leaflet-container leaflet-fade-anim"></div>
+
 @endsection
 
-@section('content')
+@section('footer_scripts')
 
-<div id="map" class="leaflet-container leaflet-fade-anim"></div>
+<script type="text/javascript" src="/plugins/randomColor/randomColor.min.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/leaflet.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/leaflet.draw.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/locate/es_la.js"></script>
+<script type="text/javascript" src="/plugins/leaflet-icon-pulse-master/L.Icon.Pulse.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/easy-button.js"></script>
+<script type="text/javascript" src="/plugins/Leaflet.markercluster/leaflet.markercluster-src.js"></script>
+<script type="text/javascript" src="/plugins/Leaflet.markercluster/leaflet.markercluster.js"></script>
+<script type="text/javascript" src="/plugins/Leaflet.markercluster-1.4.1/leaflet.markercluster-src.js"></script>
+<script type="text/javascript" src="/plugins/chosen/chosen.jquery.min.js"></script>
+<script type="text/javascript" src="/ol.js"></script>
+<script type="text/javascript" src="/ubicaciones.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/proj4.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/proj4leaflet.js"></script>
+<script type="text/javascript" src="/plugins/leaflet/tokml.js"></script>
+<script type="text/javascript" src="/list.js"></script>
         
 <script>
     $(document).ready( function () {
@@ -680,7 +715,7 @@
                     if(tipo_guardado == "guardar"){
                         $.ajax({
                             type:"POST",
-                            url:'/planificacion/guardar',
+                            url:'{{ route("planificacion_guardar") }}',
                             data: { 'geometrias': geometrias, 'tipo_geometria': tipo_geometria, 'callezona': callezona, 'descripcion': descripcion, 'id_area': area, 'id_tipo_trabajo': tipo_trabajo, 'fecha_planificada': fecha_planificada , 'horario': horario, 'id_corte_calzada': corte_calzada, '_token': token, 'id_usuario': id_usuario, 'datos_complementarios' : datos_complementarios },
                             dataType: 'json',
                             success: function(data) {
@@ -692,7 +727,7 @@
                     else if (tipo_guardado == "update"){
                         $.ajax({
                             type:"POST",
-                            url:'/planificacion/update/'+id_info,
+                            url:'{{ route("planificacion_update", ["id"]) }}'.replace('id', id_info),
                             data: {'callezona': callezona, 'descripcion': descripcion, 'id_area': area, 'id_tipo_trabajo': tipo_trabajo, 'horario': horario, 'id_corte_calzada': corte_calzada, '_token': token, 'fecha_planificada': fecha_planificada , 'id_usuario': id_usuario, 'datos_complementarios' : datos_complementarios },
                             dataType: 'json',
                             success: function(data) {
@@ -787,7 +822,7 @@
                     })
                     $.ajax({
                         type:"POST",
-                        url:'/planificacion/updategeometry',
+                        url:'{{ route("planificacion_update_geom") }}',
                         data: {'geometrias': geometrias, 'id_info': id_info, 'tipo_geometria': tipo_geometria, 'direccion_new': direccion_new, '_token': token},
                         dataType: 'json',
                         success: function(data) {
@@ -817,7 +852,7 @@
                 })
                 $.ajax({
                     type:"POST",
-                    url:'/planificacion/baja',
+                    url:'{{ route("planificacion_baja") }}',
                     data: {'_token': token, 'id_usuario': id_usuario, 'id_info': id_info },
                     dataType: 'json',
                     success: function(data) {
@@ -1031,7 +1066,7 @@
         //Cargar Geojson con las geometria del dia de la fecha
         cargarJSON(1);
         function cargarJSON(estado){
-            $.getJSON("/ajax/datos_complementarios_desclarga", function(data){
+            $.getJSON('{{ route("get_datoscomplementarios") }}', function(data){
                 globalData = data;
             });
             
@@ -1052,7 +1087,7 @@
                 }
             }
 
-            $.getJSON("/ajax/estilo_capa", function (estilos) {
+            $.getJSON('{{ route("get_estilo_capa") }}', function (estilos) {
                 var data = {
                     "area": $('#area').val(),
                     "fecha_planificada": $('#fecha_planificada').val(),
@@ -1061,7 +1096,7 @@
                 };
                 $.ajax({
                     type:"POST",
-                    url:'/ajax/puntos',
+                    url:'{{ route("get_puntos") }}',
                     data: data,
                     dataType: 'json',
                     success: function(response) {
@@ -1106,7 +1141,7 @@
                 });
                 $.ajax({
                     type:"POST",
-                    url:'/ajax/poligonos',
+                    url:'{{ route("get_poligonos") }}',
                     data: data,
                     dataType: 'json',
                     success: function(response) {
@@ -1151,7 +1186,7 @@
 
                 $.ajax({
                     type:"POST",
-                    url:'/ajax/lineas',
+                    url:'{{ route("get_lineas") }}',
                     data: data,
                     dataType: 'json',
                     success: function(response) {
@@ -1385,7 +1420,7 @@
             //Datos complementarios
             $(".datos select").each(function (){
                 selects = this;
-                $.each(layer.feature.properties.datos_complementarios, function(item, value){
+                $.each(JSON.parse(layer.feature.properties.datos_complementarios), function(item, value){
                     if($(selects).attr("name") == item){
                         $(selects).val(value);
                     }
@@ -1393,7 +1428,7 @@
             });
             $(".datos input").each(function (){
                 inputs = this;
-                $.each(layer.feature.properties.datos_complementarios, function(item, value){
+                $.each(JSON.parse(layer.feature.properties.datos_complementarios), function(item, value){
                     if($(inputs).attr("name") == item){
                         $(inputs).val(value);
                     }

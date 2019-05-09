@@ -1,4 +1,20 @@
-@extends('layouts.visualizador')
+@extends('layouts.app')
+
+@section('template_linked_css')
+
+<!-- CSS -->
+<!--Leaflet -->
+<link rel="stylesheet" href="/plugins/leaflet/leaflet.css" />
+<link rel="stylesheet" href="/plugins/leaflet/easy-button.css" />
+<link rel="stylesheet" href="/plugins/leaflet-icon-pulse-master/L.Icon.Pulse.css" />
+<!-- DataTables -->
+<link rel="stylesheet" href="/plugins/datatables/datatables.bootstrap.min.css" />
+<link rel="stylesheet" href="/plugins/datatables/buttons/buttons.dataTables.min.css" />
+<!-- Otros -->
+<link rel="stylesheet" href="/ubicaciones.css" />
+<link rel="stylesheet" href="/estilos.css" />
+
+@endsection
 
 @section('content')
 
@@ -143,7 +159,36 @@
 </div><!-- /.modal -->
 <div class="modal fade" id="dats">
         
-</div>   
+</div>
+
+@endsection
+
+@section('footer_scripts')
+
+<!-- JAVASCRIPTS -->
+
+<!-- Leaflet -->
+<script src="/plugins/leaflet/leaflet.js"></script>
+<script src="/plugins/leaflet/easy-button.js"></script>
+<script src="/plugins/leaflet-icon-pulse-master/L.Icon.Pulse.js"></script>
+<script src="/plugins/leaflet/proj4.js"></script>
+<script src="/plugins/leaflet/proj4leaflet.js"></script>
+<script src="/plugins/leaflet/tokml.js"></script>
+<script src="/plugins/leaflet.browser.print-master/leaflet.browser.print.min.js"></script>
+<script src="/plugins/FileSaver/FileSaver.js"></script>
+<!-- DataTables -->
+<script src="/plugins/datatables/datatables.min.js"></script>
+<script src="/plugins/datatables/datatables.bootstrap.min.js"></script>
+<script src="/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables/buttons/jszip.min.js"></script>
+<script src="/plugins/datatables/buttons/buttons.html5.min.js"></script>
+<script src="/plugins/datatables/buttons/pdfmake.min.js"></script>
+<script src="/plugins/datatables/buttons/vfs_fonts.js"></script>
+<script src="/plugins/datatables/buttons/buttons.colVis.min.js"></script>
+<!-- Otro -->
+<script type="text/javascript" src="/ol.js"></script>
+<script type="text/javascript" src="/ubicaciones.js"></script>
+
 <script>
     $(document).ready( function () {
         var querydt;

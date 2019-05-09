@@ -161,7 +161,7 @@ class DatatablesController extends Controller
                     return '';
                 }
                 else{
-                    return '<a href="/admin/usuarios/edit/'.$query->id.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a><a href="#" class="btn btn-xs btn-danger delete" data-id="'.$query->id.'"><i class="glyphicon glyphicon-trash"></i></a>';
+                    return '<a href="'.route('usuarios_editar_id',[$query->id]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a><a href="#" class="btn btn-xs btn-danger delete" data-id="'.$query->id.'"><i class="glyphicon glyphicon-trash"></i></a>';
                 }
                 
             });
@@ -176,7 +176,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($query)
             ->addColumn('action', function ($query) {
-                return '<a href="/admin/etiquetas/edit/'.$query->id_tag.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
+                return '<a href="'.route('etiquetas_editar_id',[$query->id_tag]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
             });
 
         return $datatables->make(true);
@@ -188,7 +188,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($query)
             ->addColumn('action', function ($query) {
-                return '<a href="/admin/etiquetas/edit/'.$query->id_equipo.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
+                return '<a href="'.route('etiquetas_editar_id',[$query->id_equipo]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
             });
 
         return $datatables->make(true);
@@ -201,7 +201,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($query)
             ->addColumn('action', function ($query) {
-                return '<a href="/admin/estilos/edit/'.$query->id.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
+                return '<a href="'.route('estilos_editar_id',[$query->id).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
             });
 
         return $datatables->make(true);
@@ -233,7 +233,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($query)
             ->addColumn('action', function ($query) {
-                return '<a href="/admin/capasutiles/edit/'.$query->id.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
+                return '<a href="'.route('capasutiles_editar_id',[$query->id]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
             });
 
         return $datatables->make(true);

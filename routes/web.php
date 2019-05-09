@@ -76,7 +76,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 		Route::get('/usuarios', 'AdministradorController@GestionarUsuarios')->name('usuarios');
 		
 		Route::group(['prefix' => 'usuarios'], function(){
-			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditView']);
+			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditView'])->name('usuarios_editar_id');
 			Route::post('/editar', ['uses' => 'AdministradorController@EditUpdate']);
 			Route::get('/registrar', ['uses' => 'AdministradorController@NewUserView'])->name('usuarios_registrar');
 			Route::post('/nuevo', ['uses' => 'AdministradorController@NewUserCreate']);
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 		Route::get('/etiquetas', ['uses' => 'AdministradorController@GestionarEtiquetas'])->name('etiquetas');
 		Route::group(['prefix' => 'etiquetas'], function(){
 			Route::post('/delete', ['uses' => 'AdministradorController@DeleteEtiqueta']);
-			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditViewEtiquetas']);
+			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditViewEtiquetas'])->name('etiquetas_editar_id');
 			Route::post('/editar', ['uses' => 'AdministradorController@EditUpdateEtiquetas']);
 			Route::get('/nueva', ['uses' => 'AdministradorController@NewEtiquetaView'])->name('etiquetas_nuevo');
 			Route::post('/nueva/post', ['uses' => 'AdministradorController@NewEtiquetaCreate']);
@@ -101,7 +101,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 
 		Route::get('/estilos', ['uses' => 'AdministradorController@GestionarEstilos'])->name('estilos');
 		Route::group(['prefix' => 'estilos'], function(){
-			Route::get('/estilos/edit/{id}', ['uses' => 'AdministradorController@EditViewEstilos']);
+			Route::get('/estilos/edit/{id}', ['uses' => 'AdministradorController@EditViewEstilos'])->name('estilos_editar_id');
 			Route::post('/estilos/editar', ['uses' => 'AdministradorController@EditUpdateEstilos']);
 		});
 
@@ -127,7 +127,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 		Route::group(['prefix' => 'capasutiles'], function(){
 			Route::get('/nuevo', ['uses' => 'AdministradorController@NewCapaView'])->name('capasutiles_nuevo');
 			Route::post('/nuevo/post', ['uses' => 'AdministradorController@NewCapa']);
-			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditCapaView']);
+			Route::get('/edit/{id}', ['uses' => 'AdministradorController@EditCapaView'])->name('capasutiles_editar_id');
 			Route::post('/editar', ['uses' => 'AdministradorController@EditCapaUpdate']);
 		});
 

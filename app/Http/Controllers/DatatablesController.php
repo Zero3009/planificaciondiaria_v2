@@ -201,7 +201,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($query)
             ->addColumn('action', function ($query) {
-                return '<a href="'.route('estilos_editar_id',[$query->id).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
+                return '<a href="'.route('estilos_editar_id',[$query->id]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
             });
 
         return $datatables->make(true);

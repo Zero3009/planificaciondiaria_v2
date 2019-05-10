@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="/plugins/jQuery/jquery-ui.theme.min.css" />
     <link rel="stylesheet" href="/plugins/bootstrap-3.3.7/css/bootstrap.min.css" />
     @yield('template_linked_css')
+
+    <style type="text/css">
+        @yield('template_fastload_css')
+    </style>
     
 </head>
 <body id="app-layout">  
@@ -23,7 +27,7 @@
 
             <div class="navbar-header" style="margin-top: 10px;">
                 <div id="direcciones" style="position: relative;">
-                    <input type="text" class="ubicaciones-input" id="txtDireccionesLugares" style="width: 100%;" placeholder="Direcciones o Lugares. Ej: Italia y Mendoza, Mitre 250" autocomplete="off" {{ (Auth::user()->roles[0]->name == 'administracion') ? 'disabled': '' }}>
+                    <input type="text" class="ubicaciones-input" id="txtDireccionesLugares" style="width: 100%;" placeholder="Direcciones o Lugares. Ej: Italia y Mendoza, Mitre 250" autocomplete="off">
                 </div>
             </div>
 
@@ -33,7 +37,9 @@
                         <ul class="nav navbar-nav navbar-right" style="width: 100%;">
                             <!-- Authentication Links -->
                             @if (Auth::guest())
-                                <li><a href="{{ url('/login') }}"> Iniciar sesión</a></li>
+                                <li class="dropdown" style="float: right;margin-right: 20px;">
+                                    <a href="{{ route('login') }}" style="color: white;"><i class="glyphicon glyphicon-log-in"></i> Iniciar sesión</a>
+                                </li>
                             @else
                                 <li class="dropdown" style="float: right;margin-right: 20px;">
                                     <a class="dropdown-item" style="color: white;" href="{{ route('logout') }}"

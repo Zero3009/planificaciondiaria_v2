@@ -50,22 +50,6 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Equipos de trabajo:</label>
-                            <div class="col-sm-10">
-                                <select name="equipos[]" id="equipo" data-placeholder=" " multiple class="form-control" style="width: 100%" required>
-                                        @foreach($equipos as $equipo)
-                                            <option value="{{ $equipo->id_equipo }}"
-                                                @foreach($areaconfig->equipo_area as $equipo_area)
-                                                    @if ($areaconfig->id_area == $equipo_area->pivot->id_area && $equipo_area->pivot->id_equipo == $equipo->id_equipo)
-                                                        selected
-                                                    @endif
-                                                @endforeach
-                                                >{{ $equipo->descripcion }}</option>
-                                        @endforeach
-                                </select>
-                            </div>
-                        </div>
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading active" role="tab" id="headingOne" style="background: #4682B4; color: #FFFFFF;">
@@ -107,13 +91,6 @@
 @section('js')
 
 <script>
-
-$("#equipo").select2({
-    language: "es",
-    placeholder: "Seleccione un empleado",
-    allowClear: true,
-    tokenSeparators: [','],
-});
 
 $.getJSON("{{route('ajax_tags')}}", function (json) {
     $.each(json, function(i, item) {
@@ -198,6 +175,13 @@ $(function(){
     });
     
 });
+
+$(".chosen-descripcion").chosen({
+    create_option: true,
+    persistent_create_option: true,
+    skip_no_results: true
+});
+
 </script>
 
 

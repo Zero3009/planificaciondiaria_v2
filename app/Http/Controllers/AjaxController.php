@@ -282,6 +282,7 @@ class AjaxController extends Controller
     public function getCapasUtiles(){
         $query=DB::table('capas_utiles')
             ->select('*')
+            ->where("estado", 1)
             ->get();
         return Response::json($query);
     }

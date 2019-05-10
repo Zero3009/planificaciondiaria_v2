@@ -104,15 +104,6 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 			Route::get('/estilos/edit/{id}', ['uses' => 'AdministradorController@EditViewEstilos'])->name('estilos_editar_id');
 			Route::post('/estilos/editar', ['uses' => 'AdministradorController@EditUpdateEstilos']);
 		});
-
-		Route::get('/equipo', ['uses' => 'AdministradorController@GestionarEquipo'])->name('equipo');
-		Route::group(['prefix' => 'equipo'], function(){
-			Route::get('/equipo/nuevo', ['uses' => 'AdministradorController@NewEquipoView'])->name('equipo_nuevo');
-			Route::get('/equipo/editar/{id}', ['uses' => 'AdministradorController@EditEquipoView']);
-			Route::post('/equipo/editar/post', ['uses' => 'AdministradorController@EditEquipoUpdate']);
-			Route::post('/equipo/nuevo/post', ['uses' => 'AdministradorController@NewEquipoConfig']);
-			Route::post('/equipo/delete', ['uses' => 'AdministradorController@DeleteEquipo']);
-		});
 		
 		Route::get('/areasconfig', ['uses' => 'AdministradorController@GestionarAreasConfig'])->name('areasconfig');
 		Route::group(['prefix' => 'areasconfig'], function(){
@@ -131,7 +122,6 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 			Route::post('/editar', ['uses' => 'AdministradorController@EditCapaUpdate']);
 		});
 
-		Route::get('/exportar', ['uses' => 'AdministradorController@Exportar'])->name('exportar');
 		Route::get('/importar', ['uses' => 'AdministradorController@Importar'])->name('importar');
 	});
 });
@@ -178,6 +168,7 @@ Route::group(['prefix' => 'ajax'], function(){
 //Datatables
 Route::group(['prefix' => 'datatables'], function(){
 	Route::get('/geometrias', ['uses' => 'DatatablesController@Geometrias'])->name('datatables_geometrias');
+	Route::get('/geometrias-planificacion', ['uses' => 'DatatablesController@GeometriasPlanificacion'])->name('datatables_geometrias-planificacion');
 	Route::get('/usuarios', ['uses' => 'DatatablesController@Usuarios'])->name('datatables_usuarios');
 	Route::get('/etiquetas', ['uses' => 'DatatablesController@Etiquetas'])->name('datatables_etiquetas');
 	Route::get('/estilos', ['uses' => 'DatatablesController@Estilos'])->name('datatables_estilos');

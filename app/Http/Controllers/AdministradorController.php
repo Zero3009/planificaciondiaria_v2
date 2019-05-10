@@ -10,7 +10,6 @@ use App\Tag;
 use App\Estilo;
 use App\PlanificacionInfo;
 use App\AreaConfig;
-use App\EquipoArea;
 use App\CapaUtil;
 use App\DatosComplementarios;
 use Redirect;
@@ -63,11 +62,6 @@ class AdministradorController extends Controller
     public function GestionarEtiquetas()
     {
         return view('admin.etiquetas');
-    }
-    
-    public function GestionarEquipo()
-    {
-        return view('admin.equipo');
     }
 
     public function GestionarEstilos()
@@ -357,9 +351,7 @@ class AdministradorController extends Controller
             ->join('tags as direccion', 'areas_config.id_direccion', '=', 'direccion.id_tag')
             ->first();
 
-        $query2 = EquipoArea::all();
-
-        return View::make('admin.areasconfig_editar')->with('areaconfig', $query)->with('equipos', $query2);
+        return View::make('admin.areasconfig_editar')->with('areaconfig', $query);
     }
     public function NewAreaConfig (Request $request){
         DB::beginTransaction();  
@@ -456,8 +448,6 @@ class AdministradorController extends Controller
             $query2->save();
             $query2->datos_complementarios()->detach();
             $query2->datos_complementarios()->attach($request->check);
-            $query2->equipo_area()->detach();
-            $query2->equipo_area()->attach($request->equipos);
             
             /*
                 $query2->html = $request->html;
@@ -491,102 +481,6 @@ class AdministradorController extends Controller
 
 
         return Redirect::to('/admin/areasconfig')->with('status', 'Se ha dado de baja el area correctamente.');
-    }
-
-    public function NewEquipoView (){
-        return View::make('admin.equipo_nuevo');
-    }
-    public function EditEquipoView ($id){
-        $query = AreaConfig::select(['areas_config.id_area', 'areas_config.id_secretaria', 'areas_config.id_direccion', 'areas_config.campo_descripcion', 'area.desc as area', 'secretaria.desc as secretaria', 'direccion.desc as direccion'])
-            ->where('areas_config.id_area', '=', $id)
-            ->join('tags as area', 'areas_config.id_area', '=', 'area.id_tag')
-            ->join('tags as secretaria', 'areas_config.id_secretaria', '=', 'secretaria.id_tag')
-            ->join('tags as direccion', 'areas_config.id_direccion', '=', 'direccion.id_tag')
-            ->first();
-
-        return View::make('admin.areasconfig_editar')->with('areaconfig', $query);
-    }
-    public function NewEquipoConfig (Request $request){
-        DB::beginTransaction();  
-        try 
-        {
-           //Validaciones
-            $validator = Validator::make($request->all(), [
-                'descripcion' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return redirect()
-                            ->back()
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-
-            $query = new EquipoArea;
-                $query->descripcion = $request->descripcion;
-            $query->save();
-
-            //Commit y redirect con success
-            DB::commit();
-            return redirect("/admin/equipo")
-                ->with('status', 'Equipo creada correctamente');
-        }
-
-        catch (Exception $e)
-        {
-            //Rollback y redirect con error
-            DB::rollback();
-            return redirect()
-                ->back()
-                ->withErrors('Se ha producido un errro: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática');
-        }
-    }
-
-    public function EditEquipoUpdate(Request $request){
-        DB::beginTransaction();  
-        try 
-        {
-           //Validaciones
-            $validator = Validator::make($request->all(), [
-                'descripcion' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return redirect()
-                            ->back()
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-
-            $query = EquipoArea::find($request->id_area);
-                $query->descripcion = $request->descripcion;
-            $query->save();
-
-            //Commit y redirect con success
-            DB::commit();
-            return redirect("/admin/equipo")
-                ->with('status', 'Equipo modificado correctamente');
-        }
-
-        catch (Exception $e)
-        {
-            //Rollback y redirect con error
-            DB::rollback();
-            return redirect()
-                ->back()
-                ->withErrors('Se ha producido un error: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática');
-        }
-    }
-
-    public function DeleteEquipo(Request $request){
-        $this->validate($request, [
-            'id' => 'required|integer',
-        ]);
-
-        $queryinfo = EquipoArea::find($request['id']);
-            $queryinfo->estado = false;
-        $queryinfo->save();
-
-
-        return Redirect::to('/admin/equipo')->with('status', 'Se ha dado de baja el area correctamente.');
     }
 
     public function NewCapa(Request $request)

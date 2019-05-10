@@ -86,17 +86,11 @@
                         <li class="{{ Request::segment(2) === 'areasconfig' || Request::segment(3) === 'areasconfig' ? 'active' : null }}">
                             <a href="{{route('areasconfig')}}"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar areas</span></a>
                         </li>
-                        <li class="{{ Request::segment(2) === 'equipo' || Request::segment(3) === 'equipo' ? 'active' : null }}">
-                            <a href="{{route('equipo')}}"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar equipo</span></a>
-                        </li>
                         <li class="{{ Request::segment(2) === 'capasutiles' || Request::segment(3) === 'capasutiles' ? 'active' : null }}">
                             <a href="{{route('capasutiles')}}"><i class='glyphicon glyphicon-pawn'></i> <span>Gestionar capas utiles</span></a>
                         </li>
                         <li class="{{ Request::segment(2) === 'importar' || Request::segment(3) === 'importar' ? 'active' : null }}">
                             <a href="{{route('importar')}}"><i class='glyphicon glyphicon-export'></i> <span>Importar</span></a>
-                        </li>
-                        <li class="{{ Request::segment(2) === 'exportar' || Request::segment(3) === 'exportar' ? 'active' : null }}">
-                            <a href="{{route('exportar')}}"><i class='glyphicon glyphicon-export'></i> <span>Exportar</span></a>
                         </li>
                         <li class="{{ Request::segment(2) === 'datoscomplementarios' || Request::segment(3) === 'datoscomplementarios' ? 'active' : null }}">
                             <a href="{{route('datoscomplementarios')}}"><i class= 'glyphicon glyphicon-export'></i><span>Datos complementarios</span></a>

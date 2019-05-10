@@ -68,24 +68,29 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($geometrias)
             ->setRowId('id_info')
-            /*->editColumn('datos_complementarios', function($geometrias) {
+            ->editColumn('datos_complementarios', function($geometrias) {
                 $json = json_decode($geometrias->datos_complementarios, true);
                 $formato = "";
-                if(!is_null($json)){
-                   foreach ($json as $key => $value) {
+                if(is_array($json) || is_object($json)  ){
+                    $i = 0;
+                    foreach ($json as $key => $value) {
                         if($value != null){
                             $desc_larga = DatosComplementarios::select("desc_larga")
                                 ->where("desc_corta", "=", $key)
                                 ->pluck("desc_larga")
                                 ->first();
-                            $formato .= $desc_larga . ': ' . $value.' | ';  
+                            if ($i == 0) { 
+                                $formato .= $desc_larga . ': ' . $value;
+                            } else {
+                                $formato .= ' | '.$desc_larga . ': ' . $value;
+                            }
+                            $i++;  
                         }  
-                    } 
-
+                    }
                     return $formato;
                 }
                 return "";
-            })*/
+            })
             ->addColumn('action', function ($geometrias) {
                 return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a><a href="#" class="btn btn-xs btn-info dats" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-search"></i></a>';
             });
@@ -201,7 +206,7 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($query)
             ->addColumn('action', function ($query) {
-                return '<a href="'.route('estilos_editar_id',[$query->id).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
+                return '<a href="'.route('estilos_editar_id',[$query->id]).'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a>';
             });
 
         return $datatables->make(true);
@@ -353,8 +358,31 @@ class DatatablesController extends Controller
 
         $datatables = app('datatables')->of($geometrias)
             ->setRowId('id_info')
+            ->editColumn('datos_complementarios', function($geometrias) {
+                $json = json_decode($geometrias->datos_complementarios, true);
+                $formato = "";
+                if(is_array($json) || is_object($json)  ){
+                    $i = 0;
+                    foreach ($json as $key => $value) {
+                        if($value != null){
+                            $desc_larga = DatosComplementarios::select("desc_larga")
+                                ->where("desc_corta", "=", $key)
+                                ->pluck("desc_larga")
+                                ->first();
+                            if ($i == 0) { 
+                                $formato .= $desc_larga . ': ' . $value;
+                            } else {
+                                $formato .= ' | '.$desc_larga . ': ' . $value;
+                            }
+                            $i++;  
+                        }  
+                    }
+                    return $formato;
+                }
+                return "";
+            })
             ->addColumn('action', function ($geometrias) {
-                return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a><a href="#" class="btn btn-xs btn-info dats" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-search"></i></a>';
+                return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a>';
             });
 
         if ($idseleccionados = $datatables->request->get('ids')) {

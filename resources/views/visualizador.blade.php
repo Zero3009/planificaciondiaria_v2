@@ -207,151 +207,80 @@
             [-33.066801, -60.856018],
             [-32.817864, -60.493469]
         ]);
+
         rolAdminCheck= $("#rol").val(); 
         rolAdminCheck = rolAdminCheck.replace(/\s+/g, '');
-        if(rolAdminCheck == 'true'){
-            var botonesExport =[
-                {
-                    text: 'Exportar a GG',
-                    action: function ()
-                    {
-                        $.getJSON('/visualizador/getgg',
-                            {
-                                "gg": querydt
-                            },
-                             function (gg) {
-                            console.log(gg);
+        var botonesExport =[
+            {
+                extend: 'excel',
+                text: 'Exportar a excel'
+            },
+            {   
+                text: 'Exportar a geojson',
+                action: function ( e, dt, node, config ) {
+                    var geojson = [];
+                    importItems.eachLayer(function (layer) {
+                        layergeo = layer.toGeoJSON().features;
+                        $.each( layergeo, function( key, value ) {
+                            geojson.push(value);
                         });
+                    });
+                    var featureCollection = {
+                        "type": "FeatureCollection",
+                        "features": geojson
+                    };
+                    var fileName = 'Exportacion personalizada '+"<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>"+'.geojson';
+                    var fileToSave = new Blob([JSON.stringify(featureCollection)], {
+                        type: 'application/json',
+                        name: fileName
+                    });
+                    saveAs(fileToSave, fileName);
+                }   
+            },
+            {
+                extend: 'pdfHtml5',
+                text: 'Imprimir parte',
+                orientation: 'landscape',
+                pageSize: 'A4',
+                exportOptions: {
+                    columns: ':visible',
+                },
+                customize: function(doc){
+                    var filtro_area = "";
+                    if($("#area").val() != ""){
+                        filtro_area = "Con filtro. Área: "+$("#area option:selected").text();
                     }
-                },
-                {   
-                    text: 'Exportar a geojson',
-                    action: function ( e, dt, node, config ) {
-                        var geojson = [];
-                        importItems.eachLayer(function (layer) {
-                            layergeo = layer.toGeoJSON().features;
-                            $.each( layergeo, function( key, value ) {
-                                geojson.push(value);
-                            });
-                        });
-                        var featureCollection = {
-                            "type": "FeatureCollection",
-                            "features": geojson
-                        };
-                        var fileName = 'Exportacion personalizada '+"<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>"+'.geojson';
-                        var fileToSave = new Blob([JSON.stringify(featureCollection)], {
-                            type: 'application/json',
-                            name: fileName
-                        });
-                        saveAs(fileToSave, fileName);
-                    }   
-                },
-                {
-                    extend: 'pdfHtml5',
-                    text: 'Imprimir parte',
-                    orientation: 'landscape',
-                    pageSize: 'A4',
-                    exportOptions: {
-                        columns: ':visible',
-                    },
-                    customize: function(doc){
-                        var filtro_area = "";
-                        if($("#area").val() != ""){
-                            filtro_area = "Con filtro. Área: "+$("#area option:selected").text();
-                        }
-                        var cols = [];
-                        cols[0] = {text: "MUNICIPALIDAD DE ROSARIO\nSecretaría de Ambiente y Espacio Público\nDirección General de Parques y Paseos", alignment: 'left', margin:[10, 10, 15, 15] };
-                        cols[1] = {text: "Sistema de Planificación\n"+filtro_area, alignment: 'center', margin:[10, 10, 15, 15] };
-                        cols[2] = {text: "<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>", alignment: 'right', margin:[10, 10, 15, 15] };
-                        var objHeader = {};
-                        objHeader['columns'] = cols;
-                        doc['header'] = objHeader;
-                        var objFooter = {};
-                        objFooter['alignment'] = 'center';
-                        doc["footer"] = function(currentPage, pageCount) {
-                            var footer = [
-                                {
-                                    text: 'Página ' + currentPage + ' de ' + pageCount,
-                                    alignment: 'center',
-                                    color: 'blue',
-                                    margin:[0, 15, 0, 15]
-                                }
-                            ];
-                            objFooter['columns'] = footer;
-                            return objFooter;
-                        };
-                        doc.pageMargins = [ 20, 50, 20, 40 ];
-                    },
-                    title: 'Programación'
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Seleccionar columnas visibles'
-                }
-            ]
-        }else{
-            var botonesExport = [
-                {
-                    text: 'Exportar a GG',
-                    action: function ()
-                    {
-                        $.getJSON('/visualizador/getgg',
+                    var cols = [];
+                    cols[0] = {text: "MUNICIPALIDAD DE ROSARIO\nSecretaría de Ambiente y Espacio Público\nDirección General de Parques y Paseos", alignment: 'left', margin:[10, 10, 15, 15] };
+                    cols[1] = {text: "Sistema de Planificación\n"+filtro_area, alignment: 'center', margin:[10, 10, 15, 15] };
+                    cols[2] = {text: "<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>", alignment: 'right', margin:[10, 10, 15, 15] };
+                    var objHeader = {};
+                    objHeader['columns'] = cols;
+                    doc['header'] = objHeader;
+                    var objFooter = {};
+                    objFooter['alignment'] = 'center';
+                    doc["footer"] = function(currentPage, pageCount) {
+                        var footer = [
                             {
-                                "gg": querydt
-                            },
-                             function (gg) {
-                            console.log(gg);
-                        });
-                    }
+                                text: 'Página ' + currentPage + ' de ' + pageCount,
+                                alignment: 'center',
+                                color: 'blue',
+                                margin:[0, 15, 0, 15]
+                            }
+                        ];
+                        objFooter['columns'] = footer;
+                        return objFooter;
+                    };
+                    doc.pageMargins = [ 20, 50, 20, 40 ];
                 },
-                {
-                    extend: 'excel',
-                    text: 'Exportar a excel'
-                },
-                {
-                    extend: 'pdfHtml5',
-                    text: 'Imprimir parte',
-                    orientation: 'landscape',
-                    pageSize: 'A4',
-                    exportOptions: {
-                        columns: ':visible',
-                    },
-                    customize: function(doc){
-                        var filtro_area = "";
-                        if($("#area").val() != ""){
-                            filtro_area = "Con filtro. Área: "+$("#area option:selected").text();
-                        }
-                        var cols = [];
-                        cols[0] = {text: "MUNICIPALIDAD DE ROSARIO\nSecretaría de Ambiente y Espacio Público\nDirección General de Parques y Paseos", alignment: 'left', margin:[10, 10, 15, 15] };
-                        cols[1] = {text: "Sistema de Planificación\n"+filtro_area, alignment: 'center', margin:[10, 10, 15, 15] };
-                        cols[2] = {text: "<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>", alignment: 'right', margin:[10, 10, 15, 15] };
-                        var objHeader = {};
-                        objHeader['columns'] = cols;
-                        doc['header'] = objHeader;
-                        var objFooter = {};
-                        objFooter['alignment'] = 'center';
-                        doc["footer"] = function(currentPage, pageCount) {
-                            var footer = [
-                                {
-                                    text: 'Página ' + currentPage + ' de ' + pageCount,
-                                    alignment: 'center',
-                                    color: 'blue',
-                                    margin:[0, 15, 0, 15]
-                                }
-                            ];
-                            objFooter['columns'] = footer;
-                            return objFooter;
-                        };
-                        doc.pageMargins = [ 20, 50, 20, 40 ];
-                    },
-                    title: 'Parte diario'
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Seleccionar columnas visibles'
-                }
-            ]
-        }
+                title: 'Programación'
+            },
+            {
+                extend: 'colvis',
+                text: 'Seleccionar columnas visibles'
+            }
+        ];
+        
         var table = $('#tabla-geometrias').DataTable({
             "processing": true,
             "serverSide": true,

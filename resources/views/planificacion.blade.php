@@ -297,9 +297,6 @@
 <script src="/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
 <script src="/plugins/datatables/buttons/jszip.min.js"></script>
 <script src="/plugins/datatables/buttons/buttons.html5.min.js"></script>
-<script src="/plugins/datatables/buttons/pdfmake.min.js"></script>
-<script src="/plugins/datatables/buttons/vfs_fonts.js"></script>
-<script src="/plugins/datatables/buttons/buttons.colVis.min.js"></script>
         
 <script>
     $(document).ready( function () {
@@ -882,14 +879,6 @@
         var ramdomColorByTipo = new Array();
 
         function onEachFeature(feature, layer, id) {
-            if(feature.geometry.type == "Point")
-            {
-                $("#feature-list tbody").append('<tr class="feature-row" id="'+feature.properties.id_info+'"><td style="vertical-align: middle;"><i class="glyphicon glyphicon-map-marker"></td><td class="feature-name">' + feature.properties.callezona + '</td><td class="feature-area hidden" >' + feature.properties.area + '</td><td class="feature-trabajo hidden" >' + feature.properties.tipo_trabajo + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-            }
-            else if (feature.geometry.type == "Polygon" || feature.geometry.type == "LineString")
-            {
-                $("#feature-list tbody").append('<tr class="feature-row" id="'+feature.properties.id_info+'"><td style="vertical-align: middle;"><i class="glyphicon glyphicon-globe"></td><td class="feature-name">' + feature.properties.callezona + '</td><td class="feature-area hidden" >' + feature.properties.area + '</td><td class="feature-trabajo hidden" >' + feature.properties.tipo_trabajo + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-            }
             if (feature.properties.id_info) {
                 arrayIds.push(feature.properties.id_info);
                 getImportById[feature.properties.id_info] = layer;
@@ -923,12 +912,6 @@
         //Deshabilitar menu contextual sobre el mapa
         $("#map").contextmenu(function(e) {
             e.preventDefault();
-        });
-
-        //FOCUS ITEMS Y OPEN POPUP
-        $(document).on('click','.feature-row',function(){
-            id = $(this).attr('id');
-            viewClick(id, 0);     
         });
 
         markersItems.on('click', function(event) {
@@ -1574,9 +1557,14 @@
                 });
             } else {
                 $('#tabla-geometrias').DataTable().ajax.reload();
-                console.log("reload");
             }
         }
+
+        $(document).on('click', '.ubicar', function (e) {
+            id = $(this).data('id');
+            viewClick(id, 0);     
+        });
+
     });
 </script>
 

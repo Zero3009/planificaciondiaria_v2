@@ -115,11 +115,13 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <span id="spancallezona" class="control-label col-sm-4"><b>Calle/Zona:</b></span> 
-                                <div class="input-group col-sm-8">
-                                    <input class="form-control" type="text" id="callezona" required>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary">G</button>
-                                    </span>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" id="callezona" required>
+                                        <span class="input-group-btn">
+                                            <button id="enabletype" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1566,6 +1568,10 @@
         $(document).on('click', '.ubicar', function (e) {
             id = $(this).data('id');
             viewClick(id, 0);     
+        });
+        $('#enabletype').on('click', function(e){
+            e.preventDefault();
+            $('#callezona').attr('readonly', false);
         });
 
     });

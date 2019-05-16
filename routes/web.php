@@ -71,6 +71,8 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer'],], function() {
 
 Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']], function() {
 	Route::group(['prefix' => 'admin'], function(){
+
+		Route::get('/trythis', 'AdministradorController@datos_complementarios_masive');
 		Route::get('/dashboard', 'AdministradorController@Index')->name('dashboard');
 
 		Route::get('/usuarios', 'AdministradorController@GestionarUsuarios')->name('usuarios');

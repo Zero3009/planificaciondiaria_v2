@@ -60,6 +60,7 @@ class PlanificacionController extends Controller
 
         $post = $request->all();
 
+
         try 
         {
             //Validaciones
@@ -72,7 +73,7 @@ class PlanificacionController extends Controller
                 'horario'           => 'required|max:20',
                 'id_corte_calzada'  => 'required|integer',
                 'id_usuario'        => 'required|integer',
-                'fecha_planificada' => 'date',
+                'fecha_planificada' => 'date|nullable',
             ]);
 
             if ($validator->fails()) {

@@ -586,5 +586,25 @@ class AdministradorController extends Controller
         return Redirect::to('/admin/datoscomplementarios')->with('status', 'Se ha añadido correctamente el dato complementario.');
     }
 
+    public function datos_complementarios_masive()
+    {
+        $planif = PlanificacionInfo::select('id_info')->where('datos_complementarios','<>',null)->get();
+        for($i = 0;$i < sizeof($planif);$i++)
+        {
+            $query = PlanificacionInfo::find($planif[$i]->id_info);
+                foreach ($query->datos_complementarios as $key => $value) {
+                    $newObject = new \stdClass();
+                    $newObject->label = $key;
+                    $newObject->value = $value;
+                    return Response::json($newObject);       
+                }
+            
+
+        }
+        //return $planif;
+        //$json_original = $planif->datos_complementarios;
+        return Response::json($planif->get());
+    }
+
     
 }

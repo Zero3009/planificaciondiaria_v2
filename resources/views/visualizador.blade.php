@@ -577,9 +577,9 @@
                     if(feature.properties.datos_complementarios[p] != ""){
                         for(var i = 0;i < globalData.length; i++)
                         {
-                            if(globalData[i].desc_corta == p)
+                            if(globalData[i].desc_corta == feature.properties.datos_complementarios[p].label)
                             {
-                                sololectura = sololectura + '<span><b>'+ globalData[i].desc_larga +'</b></span>'+'<p>'+ feature.properties.datos_complementarios[p] +'</p>';
+                                sololectura = sololectura + '<span><b>'+ globalData[i].desc_larga +'</b></span>'+'<p>'+ feature.properties.datos_complementarios[p].value +'</p>';
                                 break;
                             }
                             
@@ -845,15 +845,13 @@
                         thead += '<th>Valor</th>'; 
 
                     $.each(data, function(i, item) {
-                        for(var k = 0;k < globalData.length; k++)
-                        {
-                            if(globalData[k].desc_corta == i)
-                            {
                         
-                                tbody += '<tr><td>'+ globalData[k].desc_larga +'</td><td>'+ item +'</td></tr>';
-                                break;
+                        $.each(globalData, function(i2, item2) {
+                            if(item2.desc_corta == item.label){
+                                tbody += '<tr><td>'+ item2.desc_larga +'</td><td>'+ item.value +'</td></tr>';
                             }
-                        }
+                        });
+                        
                     });
 
                     callback($('<div class="panel panel-default" style="width: 70%;margin: auto;"><div class="panel-heading"><h3 class="panel-title"><strong>Datos complementarios</strong></h3></div><div class="panel-body"><table class="table">' + thead + tbody + '</table></div></div>')).show();

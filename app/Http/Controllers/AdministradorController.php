@@ -585,25 +585,65 @@ class AdministradorController extends Controller
 
         return Redirect::to('/admin/datoscomplementarios')->with('status', 'Se ha añadido correctamente el dato complementario.');
     }
+    public function repair($data)
+    {
+        $data = str_replace('{', "", $data);
+        $data = str_replace('}', "", $data);
+        //$data = str_replace('"', "", $data);
+        //$data = json_decode($data);
+        //return $data;
+        $data = explode(",", $data);
+        //$data = explode(",",$data);
+        $dataarray;
 
+        return $dataarray;
+    }
     public function datos_complementarios_masive()
     {
-        $planif = PlanificacionInfo::select('id_info')->where('datos_complementarios','<>',null)->get();
-        for($i = 0;$i < sizeof($planif);$i++)
-        {
-            $query = PlanificacionInfo::find($planif[$i]->id_info);
-                foreach ($query->datos_complementarios as $key => $value) {
-                    $newObject = new \stdClass();
-                    $newObject->label = $key;
-                    $newObject->value = $value;
-                    return Response::json($newObject);       
-                }
+        
+            $planif = PlanificacionInfo::select('id_info')->where('datos_complementarios','<>',null)->get();
             
+            for($i = 0;$i < sizeof($planif);$i++)
+            {
+                $query = PlanificacionInfo::find($planif[$i]->id_info);
+                if($query->datos_complementarios != "" && $query->datos_complementarios != null)
+                {
+                    $prueba = $query->datos_complementarios;
+                    $newArray= [];
+                    if(!is_array($prueba))
+                    {
+                        $prueba = json_decode($prueba, true);         
+                    }
+                    foreach ($prueba as $key => $value) 
+                    {
+                        $newObject = new \stdClass();
+                        $newObject->label = $key;
+                        $newObject->value = $value;
+                        array_push($newArray, $newObject);          
+                    }   
+                    $query->datos_complementarios = $newArray;
+                    $query->save();
+                }
+                
+            }
 
+        
+        return Response::json($newArray);
+    }
+    private function formatDatosComplementarios($datos)
+    {
+        //$datos = $this->repair($datos);
+        if($datos != "")
+        {    
+            $newArraySimple = [];
+            foreach ($datos as $key => $value) {
+                $newObject = new \stdClass();
+                $newObject->label = $key;
+                $newObject->value = $value;
+                array_push($newArraySimple, $newObject);          
+            }
+            return $newArraySimple;
         }
-        //return $planif;
-        //$json_original = $planif->datos_complementarios;
-        return Response::json($planif->get());
     }
 
     

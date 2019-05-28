@@ -69,20 +69,20 @@ class DatatablesController extends Controller
         $datatables = app('datatables')->of($geometrias)
             ->setRowId('id_info')
             ->editColumn('datos_complementarios', function($geometrias) {
-                $json = json_decode($geometrias->datos_complementarios, true);
+                $json = /*json_decode(*/$geometrias->datos_complementarios/*, true)*/   ;
                 $formato = "";
                 if(is_array($json) || is_object($json)  ){
                     $i = 0;
                     foreach ($json as $key => $value) {
-                        if($value != null){
+                        if($value->value != null){
                             $desc_larga = DatosComplementarios::select("desc_larga")
-                                ->where("desc_corta", "=", $key)
+                                ->where("desc_corta", "=", $value->label)
                                 ->pluck("desc_larga")
                                 ->first();
                             if ($i == 0) { 
-                                $formato .= $desc_larga . ': ' . $value;
+                                $formato .= $desc_larga . ': ' . $value->value;
                             } else {
-                                $formato .= ' | '.$desc_larga . ': ' . $value;
+                                $formato .= ' | '.$desc_larga . ': ' . $value->value;
                             }
                             $i++;  
                         }  
@@ -140,19 +140,11 @@ class DatatablesController extends Controller
             }
             foreach ($array_form as $key => $value) {
                 if($value != ""){
-                    $geometrias->whereRaw("UPPER(datos_complementarios ->> '$key') LIKE UPPER('%$value%')") ;
+                    $geometrias->whereJsonContains(DB::raw('lower("datos_complementarios"::text)'), [["value" => strtolower("$value"), "label" => "$key"]]);
                 }
             }  
         }
-
-        //$this->setGg($datatables->getQueryBuilder());
-        //$response = $datatables->make(true);
-        //$data = $response->getData(true);
-        //$this->gg = 'asd';
-        //$data['key'] = $datatables->getQueryBuilder();
-        return $datatables->/*with([
-            'key1' => $datatables->getQueryBuilder()->toSql()
-        ])->*/make(true);
+        return $datatables->make(true);
 	}
     public function Usuarios()
     {

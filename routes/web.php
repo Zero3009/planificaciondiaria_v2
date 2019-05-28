@@ -24,6 +24,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracio
 		Route::post('/update/{id_info}', 'PlanificacionController@update')->name('planificacion_update');
 		Route::post('/updategeometry', 'PlanificacionController@updateGeometry')->name('planificacion_update_geom');
 		Route::post('/baja', 'PlanificacionController@baja')->name('planificacion_baja');
+		Route::get('/testing', 'PlanificacionController@test');
 	});
 });
 

@@ -61,8 +61,8 @@ class PlanificacionController extends Controller
         $post = $request->all();
 
 
-        try 
-        {
+        /*try 
+        {*/
             //Validaciones
             $validator = Validator::make($request->all(), [
                 'geometrias'        => 'required',
@@ -81,8 +81,7 @@ class PlanificacionController extends Controller
             }
 
             //Funcion reutilizar el formato de datos
-            $datos_formateados = $this->formatearDatosComplementarios($post['datos_complementarios']);
-
+            $datos_formateados = $this->formatDatosComplementarios($post['datos_complementarios']);
             $contador = [];
             //Definir numero de estilo dependiendo del area
 
@@ -108,6 +107,7 @@ class PlanificacionController extends Controller
             if($post['fecha_planificada'] == ""){    
                 $post['fecha_planificada'] = null;
             }
+            //return $datos_formateados;
             //Store informacion general
             $info = new PlanificacionInfo();
                 $info->id_area = $post['id_area'];
@@ -161,14 +161,14 @@ class PlanificacionController extends Controller
             //Commit y redirect con success
             DB::commit();
             return response(['msg' => 'Se cargo correctamente la geometria', 'id_tr' => $post['id_tr'] ?? null], 200);
-        }
+        /*}
         catch (Exception $e)
         {
             return $post['id_tr'];
             //Rollback y redirect con error
             DB::rollback();
             return response(['msg' => 'Se ha producido un errro: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática', 'id_tr' => $post['id_tr'] ?? null], 401);
-        }
+        }*/
     }
     public function update(Request $request, $id_info){
         DB::beginTransaction();
@@ -193,7 +193,7 @@ class PlanificacionController extends Controller
 
             //Funcion reutilizar el formato de datos
             if($post['datos_complementarios'] != null){
-                $datos_formateados = $this->formatearDatosComplementarios($post['datos_complementarios']);
+                $datos_formateados = $this->formatDatosComplementarios($post['datos_complementarios']);
             }
 
             $array = $post['descripcion'];
@@ -340,5 +340,39 @@ class PlanificacionController extends Controller
             }
             return json_encode($object);
         }
+    }
+
+    private function formatDatosComplementarios($datos)
+    {
+        $datos = $this->repair($datos);
+        if($datos != "")
+        {    
+            $newArraySimple = [];
+            foreach ($datos as $key => $value) {
+                $newObject = new \stdClass();
+                $newObject->label = $key;
+                $newObject->value = $value;
+                array_push($newArraySimple, $newObject);          
+            }
+            return $newArraySimple;
+        }
+    }
+
+    private function repair($data)
+    {
+        $data = explode("&",$data);   
+        $dataarray;
+        for($i = 0;$i < sizeof($data);$i++)
+        {
+            $result = explode("=", $data[$i]);
+            $dataarray[$result[0]] = $result[1];
+        }
+        return $dataarray;
+    }
+
+    public function test()
+    {
+        $test = PlanificacionInfo::select('datos_complementarios')->where('id_info', '=',36935)->get();
+        return $test[0]->datos_complementarios[0];
     }
 }

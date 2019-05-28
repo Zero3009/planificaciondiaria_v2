@@ -945,13 +945,12 @@
             $('.datos_complementarios').html("");
 
             datos_json = JsonORparse(props.datos_complementarios);
-
             for(var p in datos_json){
                 for(var i = 0;i < globalData.length; i++)
                 {
-                    if(globalData[i].desc_corta == p)
+                    if(globalData[i].desc_corta == datos_json[p].label)
                     {
-                        $(".datos_complementarios").append('<div class="form-group"><span class="control-label col-sm-5"><b>'+globalData[i].desc_larga +':</b></span><div class="col-sm-7" style="padding-top: 8px;"><span class="dato_complementario"/>'+datos_json[p]+'</span></div></div>');
+                        $(".datos_complementarios").append('<div class="form-group"><span class="control-label col-sm-5"><b>'+globalData[i].desc_larga +':</b></span><div class="col-sm-7" style="padding-top: 8px;"><span class="dato_complementario"/>'+datos_json[p].value+'</span></div></div>');
                         break;
                     }   
                 }
@@ -1443,8 +1442,8 @@
                 selects = this;
                 datos_json = JsonORparse(layer.feature.properties.datos_complementarios);
                 $.each(datos_json, function(item, value){
-                    if($(selects).attr("name") == item){
-                        $(selects).val(value);
+                    if($(selects).attr("name") == value.label){
+                        $(selects).val(value.value);
                     }
                 });
             });
@@ -1452,6 +1451,9 @@
                 inputs = this;
                 datos_json = JsonORparse(layer.feature.properties.datos_complementarios);
                 $.each(datos_json, function(item, value){
+                    if($(inputs).attr("name") == value.label){
+                        $(inputs).val(value.value);
+                    }
                     if($(inputs).attr("name") == item){
                         $(inputs).val(value);
                     }

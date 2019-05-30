@@ -20,6 +20,7 @@ class PlanificacionInfo extends Model
 	{
 	    $this->attributes['descripcion'] = strtoupper($value);
 	}
+
 	public function setCallezonaAttribute($value)
 	{
 	    $this->attributes['callezona'] = strtoupper($value);
@@ -33,5 +34,10 @@ class PlanificacionInfo extends Model
     public function corte_calzada()
     {
         return $this->belongsTo('App\Tag','id_corte_calzada','id_tag');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo('App\Tag','id_area','id_tag');
     }
 }

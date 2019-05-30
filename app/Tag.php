@@ -19,6 +19,6 @@ class Tag extends Model
 
     public function datos_complementarios()
     {
-    	return $this->belongsToMany('\App\DatosComplementarios', 'area_dato');
+    	return $this->belongsToMany('\App\DatosComplementarios', 'area_dato', 'area_id', 'dato_id')->orderBy('id', 'asc');
     }
 }

@@ -216,6 +216,33 @@
                 text: 'Exportar a excel'
             },
             {   
+                text: 'Exportar a excel con datos (por área)',
+                action: function ( e, dt, node, config ) {
+
+                    if($('#area').val() != ""){
+                        $.ajax({
+                            type:"GET",
+                            url:'/visualizador/exportar-datos',
+                            data: {"min": $('#min').val(), "max": $('#max').val(), "area": $('#area').val(), "tipo_trabajo": $('#tipo_trabajo').val(), "corte_calzada": $('#corte_calzada').val(), "calle_zona": $('#calle_zona').val(), "descripcion": $('#descripcion').val(), "datos_complementarios": $('#datos_complementarios :input').serialize(), "_token": $("#_token").val()},
+                            dataType: 'json',
+                            success: function (response, textStatus, request) {
+                                var a = document.createElement("a");
+                                a.href = response.file; 
+                                a.download = response.name;
+                                document.body.appendChild(a);
+                                a.click();
+                                a.remove();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    } else {
+                        alert("Debe seleccionar un área.");
+                    }
+                }   
+            },
+            {   
                 text: 'Exportar a geojson',
                 action: function ( e, dt, node, config ) {
                     var geojson = [];

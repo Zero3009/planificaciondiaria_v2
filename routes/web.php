@@ -39,21 +39,15 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracio
 //MAPA TEMATICO
 Route::get('/visualizador', 'VisualizadorController@Index')->name('visualizador');
 Route::group(['prefix' => 'visualizador'], function(){
-	Route::get('/puntosxid/{ids_puntos}', ['uses' => 'VisualizadorController@getPointsbyID']);
-	Route::get('/poligonosxid/{ids_poligonos}', ['uses' => 'VisualizadorController@getPoligonosbyID']);
-	Route::get('/trazasxid/{ids_trazas}', ['uses' => 'VisualizadorController@getTrazasbyID']);
-});
-//DASHBOARD
-Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
-	Route::get('/dashboard', 'DashboardController@Index');
-	Route::get('/dashboard/datosindex', ['uses' => 'DashboardController@getDatosIndex']);
+	Route::get('/puntosxid/{ids_puntos}', 'VisualizadorController@getPointsbyID');
+	Route::get('/poligonosxid/{ids_poligonos}', 'VisualizadorController@getPoligonosbyID');
+	Route::get('/trazasxid/{ids_trazas}', 'VisualizadorController@getTrazasbyID');
+	Route::get('/exportar-datos', 'VisualizadorController@exportarDatos');
 });
 
 //DASHBOARD
 Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracion']], function() {
-	Route::get('/logistica', 'LogisticaController@Index');
-	Route::post('/ordenservicio/nueva', 'LogisticaController@create');
-	Route::get('/ordenservicio/listar-planificacion', ['uses' => 'LogisticaController@listarPlanificacion']);
+	Route::get('/dashboard', 'DashboardController@Index');
 	Route::get('/dashboard/datosindex', ['uses' => 'DashboardController@getDatosIndex']);
 });
 
@@ -74,6 +68,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|administracion']],
 	Route::group(['prefix' => 'admin'], function(){
 
 		Route::get('/trythis', 'AdministradorController@datos_complementarios_masive');
+
 		Route::get('/dashboard', 'AdministradorController@Index')->name('dashboard');
 
 		Route::get('/usuarios', 'AdministradorController@GestionarUsuarios')->name('usuarios');

@@ -19,6 +19,7 @@ use Validator;
 use View;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Schema;
 
 class AdministradorController extends Controller
 {
@@ -632,7 +633,6 @@ class AdministradorController extends Controller
     }
     private function formatDatosComplementarios($datos)
     {
-        //$datos = $this->repair($datos);
         if($datos != "")
         {    
             $newArraySimple = [];
@@ -644,7 +644,5 @@ class AdministradorController extends Controller
             }
             return $newArraySimple;
         }
-    }
-
-    
+    }  
 }

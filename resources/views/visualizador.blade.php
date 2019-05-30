@@ -29,7 +29,7 @@
 
 
 
-<div class="modal fade" id="tabla" tabindex="-1" role="dialog">
+<div class="modal fade" id="tabla" tabindex="-1" role="dialog" style="overflow-y:auto;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background: #00ACEC; color: #FFFFFF;">
@@ -157,6 +157,21 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div class="modal fade" id="faltaarea" tabindex="-1" role="dialog" style="modal-backdrop:opacity:0.5 !important;">
+    <div class="modal-dialog modal-lm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #00ACEC; color: #FFFFFF;">
+                <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body">
+                <label id="faltaarealabel"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeErrorModal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="dats">
         
 </div>
@@ -191,8 +206,15 @@
 
 <script>
     $(document).ready( function () {
+
         var querydt;
-        //Predefinimos variables
+
+        $('#closeErrorModal').on('click', function(event) {
+            event.preventDefault();
+            $('#faltaarea').modal('hide');
+            $('#tabla').modal();
+        });
+
         EPSG900913 = new L.Proj.CRS('EPSG:900913','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs');
         EPSG22185 = new L.Proj.CRS('EPSG:22185', '+proj=tmerc +lat_0=-90 +lon_0=-60 +k=1 +x_0=5500000 +y_0=0 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
 
@@ -234,11 +256,15 @@
                                 a.remove();
                             },
                             error: function(error) {
-                                console.log(error);
+                                $('#tabla').modal('hide');
+                                $('#faltaarealabel').text('Hubo un error en su consulta');
+                                $('#faltaarea').modal();
                             }
                         });
                     } else {
-                        alert("Debe seleccionar un área.");
+                        $('#tabla').modal('hide');
+                        $('#faltaarealabel').text('Debe seleccionar un Área');
+                        $('#faltaarea').modal();
                     }
                 }   
             },

@@ -1079,6 +1079,7 @@
             });
         }
         var globalData;
+        var successData = 0;
         //Cargar Geojson con las geometria del dia de la fecha
         cargarJSON(1);
         function cargarJSON(estado){
@@ -1104,8 +1105,8 @@
             }
 
             $.getJSON('{{ route("get_estilo_capa") }}', function (estilos) {
-                //var arrayIds = new Array();
                 arrayIds.length = 0;
+                successData = 0;
                 var data = {
                     "area": $('#area').val(),
                     "fecha_planificada": $('#fecha_planificada').val(),
@@ -1152,6 +1153,10 @@
                             console.log("No se encontraron puntos");
                         }
                         $(".leaflet-draw-toolbar a").tooltip('fixTitle');
+                        successData++;
+                        if(successData == 3){
+                            initDatatable(arrayIds);
+                        }
                     },
                     error: function(error) {
                         console.log(error);
@@ -1196,6 +1201,10 @@
                             console.log("No se encontraron poligonos");
                         }
                         $(".leaflet-draw-toolbar a").tooltip('fixTitle');
+                        successData++;
+                        if(successData == 3){
+                            initDatatable(arrayIds);
+                        }
                     },
                     error: function(error) {
                         console.log(error);
@@ -1241,13 +1250,16 @@
                             console.log("No se encontraron polylineas");
                         }
                         $(".leaflet-draw-toolbar a").tooltip('fixTitle');
+                        successData++;
+                        if(successData == 3){
+                            initDatatable(arrayIds);
+                        }
                     },
                     error: function(error) {
                         console.log(error);
                     }
                 });
                 console.log(arrayIds);
-                initDatatable(arrayIds);
             });
         }
 

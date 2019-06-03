@@ -61,8 +61,8 @@ class PlanificacionController extends Controller
         $post = $request->all();
 
 
-        /*try 
-        {*/
+        try 
+        {
             //Validaciones
             $validator = Validator::make($request->all(), [
                 'geometrias'        => 'required',
@@ -161,14 +161,14 @@ class PlanificacionController extends Controller
             //Commit y redirect con success
             DB::commit();
             return response(['msg' => 'Se cargo correctamente la geometria', 'id_tr' => $post['id_tr'] ?? null], 200);
-        /*}
+        }
         catch (Exception $e)
         {
             return $post['id_tr'];
             //Rollback y redirect con error
             DB::rollback();
             return response(['msg' => 'Se ha producido un errro: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática', 'id_tr' => $post['id_tr'] ?? null], 401);
-        }*/
+        }
     }
     public function update(Request $request, $id_info){
         DB::beginTransaction();
@@ -350,8 +350,8 @@ class PlanificacionController extends Controller
             $newArraySimple = [];
             foreach ($datos as $key => $value) {
                 $newObject = new \stdClass();
-                $newObject->label = $key;
-                $newObject->value = $value;
+                $newObject->label = urldecode($key);
+                $newObject->value = urldecode($value);
                 array_push($newArraySimple, $newObject);          
             }
             return $newArraySimple;
@@ -372,7 +372,7 @@ class PlanificacionController extends Controller
 
     public function test()
     {
-        $test = PlanificacionInfo::select('datos_complementarios')->where('id_info', '=',36935)->get();
+        $test = PlanificacionInfo::select('datos_complementarios',DB::raw('json_array_elements()'))->where('id_info', '=',36935)->get();
         return $test[0]->datos_complementarios[0];
     }
 }

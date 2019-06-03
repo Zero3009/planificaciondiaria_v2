@@ -60,7 +60,6 @@ class PlanificacionController extends Controller
 
         $post = $request->all();
 
-
         try 
         {
             //Validaciones
@@ -164,7 +163,6 @@ class PlanificacionController extends Controller
         }
         catch (Exception $e)
         {
-            return $post['id_tr'];
             //Rollback y redirect con error
             DB::rollback();
             return response(['msg' => 'Se ha producido un errro: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática', 'id_tr' => $post['id_tr'] ?? null], 401);
@@ -322,24 +320,6 @@ class PlanificacionController extends Controller
             }
 
         return $return;
-    }   
-
-    protected function formatearDatosComplementarios($datos){
-        if($datos != ""){
-            $dats = explode("&", $datos);
-            $object = null;
-            for ($iasd = 0;$iasd < sizeof($dats);$iasd++)
-            {   
-                $result = explode('=', $dats[$iasd]);
-                if($object == null){
-                    $object = (object) [$result[0] => urldecode($result[1]) ]; 
-                }else{
-                    $name = $result[0];
-                    $object->$name = urldecode($result[1]);    
-                }                
-            }
-            return json_encode($object);
-        }
     }
 
     private function formatDatosComplementarios($datos)
@@ -368,11 +348,5 @@ class PlanificacionController extends Controller
             $dataarray[$result[0]] = $result[1];
         }
         return $dataarray;
-    }
-
-    public function test()
-    {
-        $test = PlanificacionInfo::select('datos_complementarios',DB::raw('json_array_elements()'))->where('id_info', '=',36935)->get();
-        return $test[0]->datos_complementarios[0];
     }
 }

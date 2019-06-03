@@ -186,4 +186,4 @@ Route::get('/admin/calendarValidation', ['uses' => 'AdministradorController@cale
 Route::get('/admin/areaTable',['uses' => 'AdministradorController@areaTable']);
 Route::get('/datatables/test', ['uses' => 'DatatablesController@getAreasPorDia']);
 Route::get('/graphs/interv',['uses' => 'DatatablesController@getIntervData']);
-Route::get('/visualizador/getgg', ['uses' => 'DatatablesController@makeGg']);
+//Route::get('/visualizador/getgg', ['uses' => 'DatatablesController@makeGg']);

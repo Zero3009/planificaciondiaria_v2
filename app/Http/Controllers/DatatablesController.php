@@ -20,40 +20,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DatatablesController extends Controller
 {
-    private $gg = "pup";
-    public function getGg()
-    {
-        return $this->gg;
-    }
-    public function setGg($gg)
-    {
-        $this->gg = $gg;
-    }
-    public function makeGg(Request $request)
-    {
-        return PlanificacionInfo::select('datos_complementarios','fecha_planificada')->where('id_info','=',25060)->get();
-
-        /*$new = $request->gg;
-        $new = str_replace('?','true',$new);
-        $columnasDatos = DatosComplementarios::select('desc_corta')->groupBy('desc_corta')->get();
-                $descarga = DB::select($new);
-                foreach ($descarga as $key => $value) {
-          */          //return $value->;
-            //    }
-
-        /*Excel::create('Laravel Excel', function($excel) use ($new) {
-        
-            $excel->sheet('ggg', function($sheet) use ($new) {
-                
-                
-                
-                $data= json_decode( json_encode($descarga), true);
-                $sheet->fromArray($data);
- 
-            });
-        })->export('xls');
-*/
-    }
 
     public function Geometrias(Request $request)
 	{
@@ -69,27 +35,26 @@ class DatatablesController extends Controller
         $datatables = app('datatables')->of($geometrias)
             ->setRowId('id_info')
             ->editColumn('datos_complementarios', function($geometrias) {
-                $json = /*json_decode(*/$geometrias->datos_complementarios/*, true)*/   ;
+                $json = json_decode($geometrias->datos_complementarios, true);
                 $formato = "";
-                if(is_array($json) || is_object($json)  ){
+                if(is_array($json) || is_object($json)){
                     $i = 0;
                     foreach ($json as $key => $value) {
-                        if($value->value != null){
+                        if($value["value"] != null){
                             $desc_larga = DatosComplementarios::select("desc_larga")
-                                ->where("desc_corta", "=", $value->label)
+                                ->where("desc_corta", "=", $value["label"])
                                 ->pluck("desc_larga")
                                 ->first();
                             if ($i == 0) { 
-                                $formato .= $desc_larga . ': ' . $value->value;
+                                $formato .= $desc_larga . ': ' . $value["value"];
                             } else {
-                                $formato .= ' | '.$desc_larga . ': ' . $value->value;
+                                $formato .= ' | '.$desc_larga . ': ' . $value["value"];
                             }
                             $i++;  
                         }  
                     }
                     return $formato;
                 }
-                return "";
             })
             ->addColumn('action', function ($geometrias) {
                 return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a><a href="#" class="btn btn-xs btn-info dats" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-search"></i></a>';
@@ -353,25 +318,24 @@ class DatatablesController extends Controller
             ->editColumn('datos_complementarios', function($geometrias) {
                 $json = json_decode($geometrias->datos_complementarios, true);
                 $formato = "";
-                if(is_array($json) || is_object($json)  ){
+                if(is_array($json) || is_object($json)){
                     $i = 0;
                     foreach ($json as $key => $value) {
-                        if($value != null){
+                        if($value["value"] != null){
                             $desc_larga = DatosComplementarios::select("desc_larga")
-                                ->where("desc_corta", "=", $key)
+                                ->where("desc_corta", "=", $value["label"])
                                 ->pluck("desc_larga")
                                 ->first();
                             if ($i == 0) { 
-                                $formato .= $desc_larga . ': ' . $value;
+                                $formato .= $desc_larga . ': ' . $value["value"];
                             } else {
-                                $formato .= ' | '.$desc_larga . ': ' . $value;
+                                $formato .= ' | '.$desc_larga . ': ' . $value["value"];
                             }
                             $i++;  
                         }  
                     }
                     return $formato;
                 }
-                return "";
             })
             ->addColumn('action', function ($geometrias) {
                 return '<a href="#" class="btn btn-xs btn-primary ubicar" data-id="'.$geometrias->id_info.'"><i class="glyphicon glyphicon-globe"></i></a>';

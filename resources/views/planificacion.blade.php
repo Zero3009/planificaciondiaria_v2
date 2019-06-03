@@ -88,9 +88,9 @@
                                 <th class="none">Descripcion</th>
                                 <th class="none">Tipo de trabajo</th>
                                 <th class="none">Horario</th>
+                                <th class="none">Corte de calzada</th>
                                 <th class="none">Tipo de figura</th>
                                 <th class="none">Datos complementarios</th>
-                                <th class="none">Corte de calzada</th>
                                 <th class="none">Fecha</th>
                                 <th class="none">Acciones</th>
                             </tr>
@@ -1529,7 +1529,6 @@
                 $('#tabla-geometrias').DataTable({
                     "processing": true,
                     "serverSide": true,
-                    "scrollX": true,
                     "responsive": true,
                     "paging": false,
                     "info": false,

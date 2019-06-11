@@ -1546,8 +1546,10 @@
                     "info": false,
                     ajax: {
                         url: '{{ route("datatables_geometrias-planificacion") }}',
+                        type: 'POST',
                         data: function (d) {
                             d.ids = searchData();
+                            d._token = $('input[name=_token]').val();
                         },
                     },
                     "columns":[

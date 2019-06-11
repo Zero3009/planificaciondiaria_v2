@@ -167,7 +167,7 @@ Route::group(['prefix' => 'ajax'], function(){
 });
 //Datatables
 Route::group(['prefix' => 'datatables'], function(){
-	Route::get('/geometrias-planificacion', ['uses' => 'DatatablesController@GeometriasPlanificacion'])->name('datatables_geometrias-planificacion');
+	Route::post('/geometrias-planificacion', ['uses' => 'DatatablesController@GeometriasPlanificacion'])->name('datatables_geometrias-planificacion');
 	Route::get('/usuarios', ['uses' => 'DatatablesController@Usuarios'])->name('datatables_usuarios');
 	Route::get('/etiquetas', ['uses' => 'DatatablesController@Etiquetas'])->name('datatables_etiquetas');
 	Route::get('/estilos', ['uses' => 'DatatablesController@Estilos'])->name('datatables_estilos');

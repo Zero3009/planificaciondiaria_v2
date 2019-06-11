@@ -39,10 +39,12 @@ Route::group(['middleware' => ['web', 'auth', 'role:developer|area|administracio
 //MAPA TEMATICO
 Route::get('/visualizador', 'VisualizadorController@Index')->name('visualizador');
 Route::group(['prefix' => 'visualizador'], function(){
+	Route::get('/get-datatable', ['uses' => 'VisualizadorController@getDatatable'])->name('datatable_visualizador');
 	Route::get('/puntosxid/{ids_puntos}', 'VisualizadorController@getPointsbyID');
 	Route::get('/poligonosxid/{ids_poligonos}', 'VisualizadorController@getPoligonosbyID');
 	Route::get('/trazasxid/{ids_trazas}', 'VisualizadorController@getTrazasbyID');
-	Route::get('/exportar-datos', 'VisualizadorController@exportarDatos');
+	Route::get('/exportar-excel', 'VisualizadorController@exportarExcel');
+	Route::get('/exportar-geojson', 'VisualizadorController@exportarGeojson');
 });
 
 //DASHBOARD
@@ -165,7 +167,6 @@ Route::group(['prefix' => 'ajax'], function(){
 });
 //Datatables
 Route::group(['prefix' => 'datatables'], function(){
-	Route::get('/geometrias', ['uses' => 'DatatablesController@Geometrias'])->name('datatables_geometrias');
 	Route::get('/geometrias-planificacion', ['uses' => 'DatatablesController@GeometriasPlanificacion'])->name('datatables_geometrias-planificacion');
 	Route::get('/usuarios', ['uses' => 'DatatablesController@Usuarios'])->name('datatables_usuarios');
 	Route::get('/etiquetas', ['uses' => 'DatatablesController@Etiquetas'])->name('datatables_etiquetas');

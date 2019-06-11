@@ -244,7 +244,7 @@
                     if($('#area').val() != ""){
                         $.ajax({
                             type:"GET",
-                            url:'/visualizador/exportar-datos',
+                            url:'/visualizador/exportar-excel',
                             data: {"min": $('#min').val(), "max": $('#max').val(), "area": $('#area').val(), "tipo_trabajo": $('#tipo_trabajo').val(), "corte_calzada": $('#corte_calzada').val(), "calle_zona": $('#calle_zona').val(), "descripcion": $('#descripcion').val(), "datos_complementarios": $('#datos_complementarios :input').serialize(), "_token": $("#_token").val()},
                             dataType: 'json',
                             success: function (response, textStatus, request) {
@@ -341,7 +341,7 @@
             "pageLength": 2000,
             "bLengthChange": false,
             ajax: {
-                url: '/datatables/geometrias',
+                url: '{{ route("datatable_visualizador") }}',
                 data: function (d) {
                     d.min = $('#min').val();
                     d.max = $('#max').val();

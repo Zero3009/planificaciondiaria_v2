@@ -134,12 +134,42 @@ class VisualizadorController extends Controller
 		return response()->json($response);
     }
 
-    //REVISAR
     public function exportarGeojson(Request $request){
 
         //Queries
-        $planificaciones = PlanificacionInfo::select('planificacion_info.id_info', 'area.desc AS area', 'planificacion_info.descripcion', 'planificacion_info.callezona', 'planificacion_info.horario as franja_horaria',  'planificacion_info.tipo_geometria', 'corte_calzada.desc as corte_calzada', 'tipo_trabajo.desc as tipo_trabajo',  'users.name as usuario', 'planificacion_info.fecha_planificada', 'planificacion_info.updated_at as fecha_actualizacion', 'planificacion_info.datos_complementarios')
-            ->selectRaw('ST_AsText(lineas.geom) as lineas, ST_AsText(puntos.geom) as puntos, ST_AsText(poligonos.geom) as poligonos')
+        $datos_area = Tag::where('id_tag', $request->area)->with(['datos_complementarios'])->first();
+        $planificaciones = DB::table('planificacion_info')
+            ->selectRaw("json_build_object(
+                'type', 'FeatureCollection',
+                'crs',  json_build_object(
+                    'type',      'name', 
+                    'properties', json_build_object(
+                        'name', 'EPSG:4326'  
+                    )
+                ), 
+                'features', json_agg(
+                    json_build_object(
+                        'type',       'Feature',
+                        'id',         planificacion_info.id_info,
+                        'geometry',   ST_AsGeoJSON(coalesce(puntos.geom, lineas.geom, poligonos.geom))::json,
+                        'properties', json_build_object(
+                            -- list of fields
+                            'id', planificacion_info.id_info,
+                            'area', area.desc,
+                            'descripcion', planificacion_info.descripcion,
+                            'calle/zona', planificacion_info.callezona,
+                            'franja horaria', planificacion_info.horario,
+                            'tipo geom', planificacion_info.tipo_geometria,
+                            'corte de calzada', corte_calzada.desc,
+                            'tipo de trabajo', tipo_trabajo.desc,
+                            'usuario', users.name,
+                            'fecha planificada', planificacion_info.fecha_planificada,
+                            'fecha ult. modificacion', planificacion_info.updated_at,
+                            'datos_complementarios', planificacion_info.datos_complementarios
+                        )
+                    )
+                )
+            )")
             ->join('users', 'users.id', '=', 'planificacion_info.id_usuario')
             ->join('tags as area', 'area.id_tag', '=', 'planificacion_info.id_area')
             ->join('tags as corte_calzada', 'corte_calzada.id_tag', '=', 'planificacion_info.id_corte_calzada')
@@ -147,48 +177,34 @@ class VisualizadorController extends Controller
             ->leftJoin('points as puntos', 'puntos.id_info', '=', 'planificacion_info.id_info')
             ->leftJoin('linestrings as lineas', 'lineas.id_info', '=', 'planificacion_info.id_info')
             ->leftJoin('polygons as poligonos', 'poligonos.id_info', '=', 'planificacion_info.id_info')
-            ->where("planificacion_info.estado", 1)
-            ->orderby('planificacion_info.id_info', 'desc');
-        $datos_area = Tag::where('id_tag', $request->area)->with(['datos_complementarios'])->first();
-
+            ->where("planificacion_info.estado", 1);
 
         //Aplicar filtros
-        $planificaciones = $this->filtros($request, $planificaciones)->get();
+        $planificaciones = $this->filtros($request, $planificaciones)->first();
+        $featureCollection = json_decode($planificaciones->json_build_object, true);
 
-        //Mapear columnas
+        //Insertar cada dato complementarios habilitado como vacio en el array de properties
         foreach ($datos_area->datos_complementarios as $key => $value) {
-            foreach ($planificaciones as $planificacion) {
-                $planificacion->setAttribute($value["desc_corta"], "");
+            foreach ($featureCollection['features'] as $index => $feature) {
+                $featureCollection['features'][$index]['properties'][$value["desc_corta"]] = "";
+
             }
+            
         }
-        foreach ($planificaciones as $planificacion) {
-            if(isset($planificacion->datos_complementarios)){
-                foreach ($planificacion->datos_complementarios as $key => $value) {
+    
+        //Mapear datos en la propiedad correspondiente
+        foreach ($featureCollection['features'] as $index => $feature) {
+            if(isset($feature['properties']['datos_complementarios'])){
+               foreach ($feature['properties']['datos_complementarios'] as $key => $value) {
                     $label2 = $value["label"];
                     $value2 = $value["value"];
-                    $planificacion->$label2 = $value2;
+                    $featureCollection['features'][$index]['properties'][$label2] = $value2;
                 }
             }
+            unset($featureCollection['features'][$index]['properties']['datos_complementarios']);
         }
-        $planificaciones->makeHidden('datos_complementarios');
 
-        //Generar archivo excel
-        $date = \Carbon\Carbon::now();
-        $date = $date->format('d-m-Y');
-        $file = Excel::create('Reporte', function($excel) use ($planificaciones){
-            $excel->sheet('reporte', function($sheet) use ($planificaciones){
-                $data= json_decode( json_encode($planificaciones), true);
-                $sheet->fromArray($data);
-            });
-        });
-
-        $file = $file->string('xlsx');
-        $response =  array(
-            'name' => "Reporte área ".$planificaciones[0]->area." - ".$date,
-            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($file)
-        );
-
-        return response()->json($response);
+        return response()->json($featureCollection);
     }
 
     protected function filtros(Request $request, $query){

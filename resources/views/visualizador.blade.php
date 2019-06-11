@@ -27,8 +27,6 @@
 
 <input type="hidden" name="rol" id="rol" value="@if(Auth::check()) @if (Auth::user()->hasRole('developer')) true @endif @endif">
 
-
-
 <div class="modal fade" id="tabla" tabindex="-1" role="dialog" style="overflow-y:auto;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -240,7 +238,6 @@
             {   
                 text: 'Exportar a excel con datos (por área)',
                 action: function ( e, dt, node, config ) {
-
                     if($('#area').val() != ""){
                         $.ajax({
                             type:"GET",
@@ -249,8 +246,9 @@
                             dataType: 'json',
                             success: function (response, textStatus, request) {
                                 var a = document.createElement("a");
+                                var fileName = 'Exportacion excel '+"<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>"+'.xlsx';
                                 a.href = response.file; 
-                                a.download = response.name;
+                                a.download = fileName;
                                 document.body.appendChild(a);
                                 a.click();
                                 a.remove();
@@ -271,23 +269,31 @@
             {   
                 text: 'Exportar a geojson',
                 action: function ( e, dt, node, config ) {
-                    var geojson = [];
-                    importItems.eachLayer(function (layer) {
-                        layergeo = layer.toGeoJSON().features;
-                        $.each( layergeo, function( key, value ) {
-                            geojson.push(value);
+                    if($('#area').val() != ""){
+                        $.ajax({
+                            type:"GET",
+                            url:'/visualizador/exportar-geojson',
+                            data: {"min": $('#min').val(), "max": $('#max').val(), "area": $('#area').val(), "tipo_trabajo": $('#tipo_trabajo').val(), "corte_calzada": $('#corte_calzada').val(), "calle_zona": $('#calle_zona').val(), "descripcion": $('#descripcion').val(), "datos_complementarios": $('#datos_complementarios :input').serialize(), "_token": $("#_token").val()},
+                            dataType: 'json',
+                            success: function (response, textStatus, request) {
+                                var fileName = 'Exportacion geojson '+"<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>"+'.geojson';
+                                var fileToSave = new Blob([JSON.stringify(response)], {
+                                    type: 'application/json',
+                                    name: fileName
+                                });
+                                saveAs(fileToSave, fileName);
+                            },
+                            error: function(error) {
+                                $('#tabla').modal('hide');
+                                $('#faltaarealabel').text('Hubo un error en su consulta');
+                                $('#faltaarea').modal();
+                            }
                         });
-                    });
-                    var featureCollection = {
-                        "type": "FeatureCollection",
-                        "features": geojson
-                    };
-                    var fileName = 'Exportacion personalizada '+"<?php echo \Carbon\Carbon::now()->format('d-m-Y');?>"+'.geojson';
-                    var fileToSave = new Blob([JSON.stringify(featureCollection)], {
-                        type: 'application/json',
-                        name: fileName
-                    });
-                    saveAs(fileToSave, fileName);
+                    } else {
+                        $('#tabla').modal('hide');
+                        $('#faltaarealabel').text('Debe seleccionar un Área');
+                        $('#faltaarea').modal();
+                    }
                 }   
             },
             {
@@ -678,7 +684,6 @@
                         dataType: 'json',
                         success: function(response) {
                             geojson = jQuery.parseJSON(response[0].row_to_json);
-                            console.log(geojson);
                             if(geojson.features != null){
                                 L.geoJSON(geojson, { 
                                     onEachFeature: onEachFeature, 
@@ -711,7 +716,6 @@
                         dataType: 'json',
                         success: function(response) {
                             geojson = jQuery.parseJSON(response[0].row_to_json);
-                            console.log(geojson);
                             if(geojson.features != null){
                                 L.geoJSON(geojson, { 
                                     onEachFeature: onEachFeature, 
@@ -744,7 +748,6 @@
                         dataType: 'json',
                         success: function(response) {
                             geojson = jQuery.parseJSON(response[0].row_to_json);
-                            console.log(geojson);
                             if(geojson.features != null){
                                 L.geoJSON(geojson, { 
                                     onEachFeature: onEachFeature, 

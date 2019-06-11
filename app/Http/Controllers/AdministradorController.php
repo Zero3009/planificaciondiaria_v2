@@ -602,7 +602,7 @@ class AdministradorController extends Controller
     public function datos_complementarios_masive()
     {
         
-            $planif = PlanificacionInfo::select('id_info')->where('datos_complementarios','<>',null)->get();
+            /*$planif = PlanificacionInfo::select('id_info')->where('datos_complementarios','<>',null)->get();
             
             for($i = 0;$i < sizeof($planif);$i++)
             {
@@ -629,7 +629,18 @@ class AdministradorController extends Controller
             }
 
         
-        return Response::json($newArray);
+        return Response::json($newArray);*/
+        $planif = PlanificacionInfo::select('id_info')->get();
+        for($i = 0;$i<sizeof($planif);$i++)
+        {
+            $query = PlanificacionInfo::find($planif[$i]->id_info);
+            if($query->datos_complementarios != "" && $query->datoscomplementarios != null)
+            {
+                $query->datos_complementarios = urldecode($query->datos_complementarios);
+                $query->save();
+            }
+        }
+        return 'work';
     }
     private function formatDatosComplementarios($datos)
     {

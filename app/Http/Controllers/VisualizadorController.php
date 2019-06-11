@@ -219,7 +219,7 @@ class VisualizadorController extends Controller
             $query->whereRaw("UPPER(\"callezona\") LIKE UPPER('%$calle_zona%')");
         } 
 
-        if ($datos_complementarios = $request->datos_complementarios) {
+        if ($datos_complementarios = urldecode($request->datos_complementarios)) {
             $array_form = array();
             $strArray = explode("&", $datos_complementarios);
             foreach ($strArray as $item) {

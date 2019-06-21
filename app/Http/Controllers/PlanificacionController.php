@@ -80,7 +80,11 @@ class PlanificacionController extends Controller
             }
 
             //Funcion reutilizar el formato de datos
-            $datos_formateados = $this->formatDatosComplementarios($post['datos_complementarios']);
+            if($post['datos_complementarios'] != null)
+            {
+                $datos_formateados = $this->formatDatosComplementarios($post['datos_complementarios']);    
+            }
+            
             $contador = [];
             //Definir numero de estilo dependiendo del area
 

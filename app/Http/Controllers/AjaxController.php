@@ -47,7 +47,7 @@ class AjaxController extends Controller
             $addlineas .= " AND lg.estado = true";
         }
 
-        if($request->area != "all" && $request->rol == "area"){
+        if($request->area != "all" && $request->rol == "Area"){
             $addlineas .= " AND lg.id_area = ".$request->area." ";
         }
 
@@ -110,7 +110,7 @@ class AjaxController extends Controller
             $addlineas .= " AND lg.estado = true";
         }
 
-        if($request->area != "all" && $request->rol == "area"){
+        if($request->area != "all" && $request->rol == "Area"){
             $addlineas .= " AND lg.id_area = ".$request->area." ";
         }
 
@@ -173,7 +173,7 @@ class AjaxController extends Controller
             $addlineas .= " AND lg.estado = true";
         }
 
-        if($request->area != "all" && $request->rol == "area"){
+        if($request->area != "all" && $request->rol == "Area"){
             $addlineas .= " AND lg.id_area = ".$request->area." ";
         }
 
@@ -270,7 +270,7 @@ class AjaxController extends Controller
         return Response::json($id);
     }
 
-    public function getLegend() {
+    public function getLegend(Request $request) {
         $query=DB::table('estilos')
             ->join('tags', 'tags.id_tag', '=', 'estilos.id_area')
             ->select('estilos.id_area', 'estilos.color', 'tags.desc')

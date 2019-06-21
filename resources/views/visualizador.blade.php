@@ -220,6 +220,7 @@
         var currentTime = new Date();
 
         //Variable que contiene el mapa
+        var map;
         map = new L.Map('map', {center: new L.LatLng(-32.9497106, -60.6473459), zoom: 12, minZoom: 12}),
 
         //Setiar limites
@@ -598,27 +599,34 @@
             });
         });
 
-        var legendControl = L.Control.extend({
-            options: {
-                position: 'bottomright'
-            },
-            onAdd: function (map) {
-                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control legend');
-                container.style.backgroundColor = 'white';
-                container.style.padding = '5px';
-                container.innerHTML += "<h5 style='text-align: center;font-weight: bold;'><span>REFERENCIAS</span></h5>";
-                $.getJSON("/ajax/legend",function(data){
-                    $.each(data, function( key, value ) {
-                        container.innerHTML += "<div><i style='background:"+value.color+";width: 18px;height: 18px;float: left;margin-right: 8px;'></i><span> "+value.desc+"</span></div><br>";
-                    });
-                });
-                return container;
-            },
-        });
-        map.addControl(new legendControl());
+        
+            
 
-
+        var array = [];
         function onEachFeature(feature, layer, id) {
+             
+            if(array.length > 0)
+            {
+                flag = false;
+                for(i = 0;i < array.length;i++)
+                {
+                    
+                    if(feature.properties.area != array[i] && i == (array.length-1) && flag == false)
+                    {
+                        array.push(feature.properties.area);
+                        break;
+                    }
+                    else if(feature.properties.area == array[i])
+                    {
+                        flag = true;
+                    }
+
+                }
+            }
+            else
+            {
+                array.push(feature.properties.area);
+            }
             var sololectura =
                 '<span><b>Calle / Zona</b></span>'+
                 '<p>'+feature.properties.callezona+'</p>'+
@@ -648,6 +656,8 @@
             layer.bindPopup(sololectura);
         }
         var globalData;
+        var legendControl;
+        var successData = 0;
         function cargarJson(){
             $.getJSON("/ajax/datos_complementarios_desclarga", function(data){
                 globalData = data;
@@ -702,6 +712,11 @@
                             else {
                                 console.log("No se encontraron polylineas");
                             }
+                            successData++;
+                            if(successData == 3){
+                                initLegend(map);
+                                successData = 0;
+                            }
                         },
                         error: function(error) {
                             console.log(error);
@@ -733,6 +748,11 @@
                             }
                             else {
                                 console.log("No se encontraron poligonos");
+                            }
+                            successData++;
+                            if(successData == 3){
+                                initLegend(map);
+                                successData = 0;
                             }
                         },
                         error: function(error) {
@@ -766,13 +786,67 @@
                             else {
                                 console.log("No se encontraron puntos");
                             }
+                            successData++;
+                            if(successData == 3){
+                                initLegend(map);
+                                successData = 0;
+                            }
                         },
                         error: function(error) {
                             console.log(error);
                         }
                     });
                 }
-            }); 
+            });
+
+            
+        }
+        var legendControl;
+        function initLegend(map){
+            if(map.legendControl)
+            {
+                map.removeControl(legendControl) 
+            }
+            L.Control.legendControl = L.Control.extend({
+                options: {
+                    position: 'bottomright'
+                },
+                onAdd: function (map) {
+                    
+
+                    var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control legend');
+                    
+                    $(container).empty();
+                    container.style.backgroundColor = 'white';
+                    container.style.padding = '5px';
+                    container.innerHTML += "<h5 style='text-align: center;font-weight: bold;'><span>REFERENCIAS</span></h5>";
+                    $.getJSON("/ajax/legend", function(data){
+                        $.each(data, function( key, value ) {
+                            console.log(array)
+                            for(i = 0; i < array.length;i++)
+                            {
+                                if(array[i] == value.desc)
+                                {
+                                   container.innerHTML += "<div><i style='background:"+value.color+";width: 18px;height: 18px;float: left;margin-right: 8px;'></i><span> "+value.desc+"</span></div><br>";
+                                   break;
+
+                                }
+                            }
+                        });
+                    });
+                    map.legendControl = this;
+                    return container;
+                },
+                onRemove: function (map) {
+                    console.log(map);
+                    console.log('work')
+                    delete map.legendControl;
+                }
+            });
+            legendControl = new L.Control.legendControl();
+            legendControl.addTo(map)
+            return legendControl;
+            //map.removeControl(legendControl)
         }
 
         //API de ubicaciones de la MR

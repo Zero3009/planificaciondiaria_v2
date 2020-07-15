@@ -50,13 +50,8 @@ class ServiciosSuaController extends Controller
 
     public function getToken(Request $request){
 
-        /*return json_encode("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmFtaXJlNyIsImNyZWF0ZWQiOjE1NTIxNDQxNDE5MjAsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1NVQV9SRUNJQklSIn0seyJhdXRob3JpdHkiOiJST0xFX1NVQV9SRUdJU1RSQSJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9TVUFfUkVTT0xWRVIifSx7ImF1dGhvcml0eSI6IlJPTEVfU1VBX0VYUE9SVEFSX0dJUyJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9TVUFfR0VTVElPTkEifSx7ImF1dGhvcml0eSI6IlJPTEVfU1VBX0RFUklWQVIifSx7ImF1dGhvcml0eSI6IlJPTEVfU1VBX0NBUkdBUiJ9XSwiZXhwIjoxNTUyNzQ4OTQxfQ.CJkpq19avbL16GRKeS-pT7DVh7dQegAJWnpQtKZX70UT8NFCcb1Pahbly5pRXktUteclmnAqAYCcF0Qm4N9CtQ");
-        */
         $post = $request->all();
-        // Get cURL resource
         $curl = curl_init();
-        // Set some options - we are passing in a useragent too here
-        //return $post;
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -69,14 +64,10 @@ class ServiciosSuaController extends Controller
             ))
         ));
 
-        //dd($curl);
-        // Send the request & save response to $resp
         $resp = curl_exec($curl);
-        // Close request to clear up some resources
         curl_close($curl);
-        //return response::json($resp);
+
         return utf8_encode($resp);
-        
     }
 
     public function getIdIntervenciones(Request $request){

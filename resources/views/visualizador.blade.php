@@ -409,14 +409,17 @@
                 layers: ['osm'],
                 format: 'image/jpeg',
                 crs: EPSG900913
-            }).addTo(map),
+            }),
             "INFOMAPA": L.tileLayer.wms('http://infomapa.rosario.gov.ar/wms/planobase?', {
                 layers: ['rural_metropolitana','manzanas_metropolitana','limites_metropolitana','limite_municipio','sin_manzanas','manzanas','parcelas','manzanas_no_regularizada','espacios_verdes','canteros','av_circunvalacion','avenidas_y_boulevares','sentidos_de_calle','via_ferroviaria','hidrografia','puentes','islas_del_parana','bancos_de_arena','autopistas','nombres_de_calles','numeracion_de_calles'],
                 format: 'image/jpeg',
                 crs: EPSG22185,
                 attribution: '&copy; Municipalidad de Rosario'
             }),
-            "OSM": L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
+            "OSM": L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 18,
+              attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
+            ).addTo(map),
             "GMap Satelital": L.tileLayer('http://www.google.com/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
                 attribution: 'Google'
             }),

@@ -24,8 +24,8 @@
 <input type="hidden" value="" id="coordenadaX">
 <input type="hidden" value="" id="coordenadaY">
 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-
-<input type="hidden" name="rol" id="rol" value="@if(Auth::check()) @if (Auth::user()->hasRole('developer')) true @endif @endif">
+a
+<input type="hidden" name="rol" id="rol" value="@if(Auth::check()) @if (Auth::user()->roles[0]->name) true @endif @endif">
 
 <div class="modal fade" id="tabla" tabindex="-1" role="dialog" style="overflow-y:auto;">
     <div class="modal-dialog modal-lg" role="document">

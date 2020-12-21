@@ -510,7 +510,7 @@ a
                 numberOfMonths: 1,      
                 showAnim: "slideDown",
                 dateFormat: "yy-mm-dd",
-                maxDate: '0',
+                maxDate: '5',
                 onClose: function(selectedDate) {
                     $("#min").datepicker("option", "maxDate", selectedDate);
                 }
